@@ -1,0 +1,76 @@
+/* SAS-AI Design System Variables */
+:root {
+    /* Backgrounds */
+    --primary-bg: #0a0a23;
+    /* Deep Navy/Black - Main background */
+    --card-bg: #343a40;
+    /* Dark Grey - Card backgrounds */
+
+    /* Accent Colors */
+    --primary-accent: #007bff;
+    /* Tech Blue - Primary buttons, links */
+    --highlight: #00e5ff;
+    /* Bright Cyan - Secondary highlights, CTAs */
+
+    /* Text Colors */
+    --text-light: #f8f9fa;
+    /* Light text on dark backgrounds */
+    --text-muted: #6c757d;
+    /* Secondary/muted text */
+
+    /* Utility Colors */
+    --success: #28a745;
+    /* Success states, completion */
+    --danger: #dc3545;
+    /* Errors, warnings, failed states */
+    --warning: #ffc107;
+    /* Warning states, pending actions */
+
+    /* Typography */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Roboto', 'Lato', sans-serif;
+
+    /* Animations */
+    --transition-base: 0.3s ease;
+}
+
+/* Global Overrides for Dark Theme */
+body {
+    background-color: var(--primary-bg);
+    color: var(--text-light);
+    font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    color: var(--text-light);
+}
+
+a {
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+}
+
+/* Utility Classes */
+.text-accent {
+    color: var(--highlight) !important;
+}
+
+.bg-primary-dark {
+    background-color: var(--primary-bg) !important;
+}
+
+.card-custom {
+    background-color: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+}

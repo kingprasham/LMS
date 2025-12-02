@@ -1,0 +1,264 @@
+/* Support Page Styles - Light Theme Matching Dashboard */
+
+.support-content {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Search Hero - Light Theme */
+.support-hero-card {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(79, 70, 229, 0.05) 100%);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.support-hero-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.support-hero-card h2 {
+    color: var(--text-main);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.input-group-text {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-right: none;
+    color: var(--text-secondary);
+}
+
+.form-control.bg-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    color: var(--text-main);
+}
+
+.form-control.bg-card::placeholder {
+    color: var(--text-muted);
+}
+
+.form-control.bg-card:focus {
+    background: white;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    border-color: var(--primary);
+    border-left: 1px solid var(--primary);
+    color: var(--text-main);
+}
+
+/* Support Cards - Light Theme */
+.support-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.support-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.support-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+}
+
+.support-card:hover::before {
+    transform: scaleX(1);
+}
+
+.support-icon {
+    width: 4rem;
+    height: 4rem;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.support-card:hover .support-icon {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.support-card h5 {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+}
+
+.support-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.text-accent {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: auto;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.text-accent:hover {
+    color: var(--primary-hover);
+    transform: translateX(5px);
+}
+
+/* Ticket Form - Light Theme */
+.ticket-form-card {
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+}
+
+.ticket-form-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.ticket-form-card h3 {
+    color: var(--text-main);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-control:focus {
+    background: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    color: var(--text-main);
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background: var(--bg-body);
+    opacity: 0.7;
+}
+
+.form-select {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    background: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    color: var(--text-main);
+}
+
+.btn-custom-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-custom-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-custom-primary:active {
+    transform: translateY(0);
+}
+
+/* FAQ Section Styles */
+.faq-section {
+    margin-top: 3rem;
+}
+
+.faq-item {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .support-hero-card {
+        padding: 2rem 1rem;
+    }
+
+    .support-card {
+        margin-bottom: 1rem;
+    }
+
+    .ticket-form-card {
+        padding: 1.5rem;
+    }
+}

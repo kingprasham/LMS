@@ -1,0 +1,174 @@
+/* Certificate Page Styles */
+
+.certificate-page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.certificate-preview-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.certificate-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 70.7%;
+    /* Standard Landscape Aspect Ratio */
+    background: #f8fafc;
+    border: 10px solid #1e293b;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.certificate-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    background: white;
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.cert-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.cert-title {
+    font-family: 'Playfair Display', serif;
+    /* Use a serif font if available, or fallback */
+    font-size: 2.5rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cert-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.cert-recipient {
+    font-family: 'Great Vibes', cursive;
+    /* Handwriting font */
+    font-size: 3.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding: 0 2rem 0.5rem 2rem;
+}
+
+.cert-course {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2rem;
+}
+
+.cert-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 2rem;
+}
+
+.cert-signature {
+    text-align: center;
+}
+
+.signature-img {
+    height: 40px;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.signature-line {
+    width: 150px;
+    height: 1px;
+    background: #cbd5e1;
+    margin: 0 auto 0.5rem auto;
+}
+
+.signature-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.signature-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Actions */
+.certificate-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-cert-action {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.btn-download-pdf {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-download-pdf:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-share {
+    background: white;
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-share:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: #eff6ff;
+}
+
+.share-linkedin {
+    color: #0077b5;
+}
+
+.share-twitter {
+    color: #1da1f2;
+}
+
+.share-facebook {
+    color: #1877f2;
+}

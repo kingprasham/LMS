@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning with iNeuron</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="./images/logo.png" alt="iNeuron Logo" class="navbar-logo">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <div class="search-box mx-auto my-3 my-lg-0">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" placeholder="Search courses...">
+                    </div>
+                </div>
+
+                <a href="#" class="btn btn-primary login-btn ms-lg-3">
+                    <i class="fas fa-user-circle me-2"></i>Login / Register
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Redesigned -->
+    <main class="hero-section-redesign">
+        <div class="hero-gradient-bg"></div>
+        <div class="hero-floating-elements">
+            <div class="float-element float-1"></div>
+            <div class="float-element float-2"></div>
+            <div class="float-element float-3"></div>
+            <div class="float-element float-4"></div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center min-vh-85">
+                <div class="col-lg-6 hero-text-redesign">
+                    <div class="hero-badge">
+                        <i class="fas fa-fire"></i> #1 Learning Platform
+                    </div>
+                    <h1 class="hero-title-new">
+                        Transform Your Career with
+                        <span class="highlight-text">Industry-Ready</span>
+                        Skills
+                    </h1>
+                    <p class="hero-description">
+                        Join thousands of learners mastering cutting-edge technologies.
+                        Get hands-on experience, mentorship, and career support all in one place.
+                    </p>
+                    <div class="hero-cta-group">
+                        <a href="#courses" class="btn-modern btn-primary-modern">
+                            Start Learning
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                        <a href="#" class="btn-modern btn-secondary-modern">
+                            <i class="fas fa-play-circle me-2"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+                    <div class="hero-stats-inline">
+                        <div class="stat-inline">
+                            <strong>10,000+</strong>
+                            <span>Active Students</span>
+                        </div>
+                        <div class="stat-inline">
+                            <strong>400+</strong>
+                            <span>Courses</span>
+                        </div>
+                        <div class="stat-inline">
+                            <strong>95%</strong>
+                            <span>Success Rate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-visual-new">
+                        <div class="hero-card-float hero-card-1">
+                            <div class="card-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div>
+                                <strong>Live Classes</strong>
+                                <p>Interactive sessions</p>
+                            </div>
+                        </div>
+                        <div class="hero-card-float hero-card-2">
+                            <div class="card-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <strong>Certificates</strong>
+                                <p>Industry recognized</p>
+                            </div>
+                        </div>
+                        <div class="hero-card-float hero-card-3">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <strong>Community</strong>
+                                <p>24/7 Support</p>
+                            </div>
+                        </div>
+                        <div class="hero-image-main">
+                            <img src="./images/1.jpg" alt="Learning Platform" class="hero-img-redesign">
+                            <div class="hero-image-badge">
+                                <i class="fas fa-star"></i> 4.9/5 Rating
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Stats Section - Redesigned with Progress Circles -->
+    <section class="stats-section-redesign py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card-modern animate-on-scroll">
+                        <div class="stat-icon-wrapper">
+                            <svg class="progress-ring" width="80" height="80">
+                                <circle class="progress-ring-circle" stroke="#e2e8f0" stroke-width="4" fill="transparent" r="36" cx="40" cy="40"/>
+                                <circle class="progress-ring-circle-fill" stroke="url(#gradient1)" stroke-width="4" fill="transparent" r="36" cx="40" cy="40" style="stroke-dasharray: 226; stroke-dashoffset: 56.5;"/>
+                                <defs>
+                                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#5a67d8;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#4a55c7;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <i class="fas fa-chart-line stat-icon-modern"></i>
+                        </div>
+                        <div class="stat-content-modern">
+                            <h3 class="stat-number-modern" data-target="55" data-suffix="%">0%</h3>
+                            <p class="stat-label-modern">Average Salary Hike</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card-modern animate-on-scroll">
+                        <div class="stat-icon-wrapper">
+                            <svg class="progress-ring" width="80" height="80">
+                                <circle class="progress-ring-circle" stroke="#e2e8f0" stroke-width="4" fill="transparent" r="36" cx="40" cy="40"/>
+                                <circle class="progress-ring-circle-fill" stroke="url(#gradient2)" stroke-width="4" fill="transparent" r="36" cx="40" cy="40" style="stroke-dasharray: 226; stroke-dashoffset: 28.25;"/>
+                                <defs>
+                                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <i class="fas fa-book-open stat-icon-modern"></i>
+                        </div>
+                        <div class="stat-content-modern">
+                            <h3 class="stat-number-modern" data-target="400" data-suffix="+">0+</h3>
+                            <p class="stat-label-modern">Different Courses</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card-modern animate-on-scroll">
+                        <div class="stat-icon-wrapper">
+                            <svg class="progress-ring" width="80" height="80">
+                                <circle class="progress-ring-circle" stroke="#e2e8f0" stroke-width="4" fill="transparent" r="36" cx="40" cy="40"/>
+                                <circle class="progress-ring-circle-fill" stroke="url(#gradient3)" stroke-width="4" fill="transparent" r="36" cx="40" cy="40" style="stroke-dasharray: 226; stroke-dashoffset: 22.6;"/>
+                                <defs>
+                                    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <i class="fas fa-users stat-icon-modern"></i>
+                        </div>
+                        <div class="stat-content-modern">
+                            <h3 class="stat-number-modern" data-target="10000" data-suffix="+">0+</h3>
+                            <p class="stat-label-modern">Career Transitions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card-modern animate-on-scroll">
+                        <div class="stat-icon-wrapper">
+                            <svg class="progress-ring" width="80" height="80">
+                                <circle class="progress-ring-circle" stroke="#e2e8f0" stroke-width="4" fill="transparent" r="36" cx="40" cy="40"/>
+                                <circle class="progress-ring-circle-fill" stroke="url(#gradient4)" stroke-width="4" fill="transparent" r="36" cx="40" cy="40" style="stroke-dasharray: 226; stroke-dashoffset: 33.9;"/>
+                                <defs>
+                                    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <i class="fas fa-handshake stat-icon-modern"></i>
+                        </div>
+                        <div class="stat-content-modern">
+                            <h3 class="stat-number-modern" data-target="400" data-suffix="+">0+</h3>
+                            <p class="stat-label-modern">Hiring Partners</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container my-5">
+    <div class="support-banner animate-on-scroll">
+        <span class="live-badge">LIVE NOW</span>
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-12">
+                <h2>Support System</h2>
+                <p class="text-muted">
+                    Our sunny system is live again, this time it is bigger, better and faster.
+                    Experience a tech community like never seen before
+                </p>
+                <a href="#" class="btn btn-primary explore-btn">Take me there &rarr;</a>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <img src="./images/2.svg" class="support-image" alt="Support Graphic">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Courses Section - Completely Redesigned -->
+<section class="courses-section-redesign py-5" id="courses">
+    <div class="container">
+        <div class="section-header text-center mb-5 animate-on-scroll">
+            <div class="section-badge">
+                <i class="fas fa-graduation-cap"></i> Popular Courses
+            </div>
+            <h2 class="section-title-modern">
+                Master <span class="gradient-text">In-Demand</span> Skills
+            </h2>
+            <p class="section-description">
+                Choose from our hand-picked selection of industry-leading courses
+            </p>
+        </div>
+
+        <!-- Modern Tab Pills -->
+        <div class="course-filters mb-5 animate-on-scroll">
+            <button class="filter-pill active" data-filter="all">
+                <i class="fas fa-th"></i> All Courses
+            </button>
+            <button class="filter-pill" data-filter="bootcamp">
+                <i class="fas fa-rocket"></i> Bootcamp
+            </button>
+            <button class="filter-pill" data-filter="community">
+                <i class="fas fa-users"></i> Community
+            </button>
+            <button class="filter-pill" data-filter="oneneuron">
+                <i class="fas fa-brain"></i> One Neuron
+            </button>
+        </div>
+
+        <div class="row g-4">
+            <!-- Course Card 1 - Modern Design -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card-redesign">
+                    <div class="course-card-header">
+                        <img src="./images/3.webp" class="course-thumbnail-modern" alt="Course">
+                        <div class="course-overlay">
+                            <button class="btn-play-course">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-badges-top">
+                            <span class="badge-trending">
+                                <i class="fas fa-fire"></i> Trending
+                            </span>
+                        </div>
+                        <div class="course-rating-badge">
+                            <i class="fas fa-star"></i> 4.8
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-tag">Data Science</span>
+                            <span class="course-level">Advanced</span>
+                        </div>
+                        <h3 class="course-title-modern">Data Science Masters Pro 2024</h3>
+                        <p class="course-excerpt">Master Python, ML, AI, and deep learning with industry projects</p>
+
+                        <div class="course-instructor">
+                            <div class="instructor-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="instructor-info">
+                                <span class="instructor-name">Sunny Savita</span>
+                                <span class="instructor-title">+2 instructors</span>
+                            </div>
+                        </div>
+
+                        <div class="course-stats-grid">
+                            <div class="stat-item-small">
+                                <i class="fas fa-clock"></i>
+                                <span>240+ hrs</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-video"></i>
+                                <span>180 videos</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-users"></i>
+                                <span>5.2k students</span>
+                            </div>
+                        </div>
+
+                        <div class="course-footer">
+                            <div class="course-price-modern">
+                                <span class="price-current">₹8,000</span>
+                                <span class="price-original">₹10,000</span>
+                                <span class="price-discount">20% OFF</span>
+                            </div>
+                            <a href="#" class="btn-enroll-modern">
+                                Enroll Now
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Card 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card-redesign">
+                    <div class="course-card-header">
+                        <img src="./images/3.webp" class="course-thumbnail-modern" alt="Course">
+                        <div class="course-overlay">
+                            <button class="btn-play-course">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-badges-top">
+                            <span class="badge-bestseller">
+                                <i class="fas fa-crown"></i> Bestseller
+                            </span>
+                        </div>
+                        <div class="course-rating-badge">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-tag">Interview Prep</span>
+                            <span class="course-level">Intermediate</span>
+                        </div>
+                        <h3 class="course-title-modern">Data Science Interview Preparation</h3>
+                        <p class="course-excerpt">Ace your DS interviews with real-world questions and solutions</p>
+
+                        <div class="course-instructor">
+                            <div class="instructor-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="instructor-info">
+                                <span class="instructor-name">Mayank Aggarwal</span>
+                                <span class="instructor-title">Sr. Data Scientist</span>
+                            </div>
+                        </div>
+
+                        <div class="course-stats-grid">
+                            <div class="stat-item-small">
+                                <i class="fas fa-clock"></i>
+                                <span>80+ hrs</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-video"></i>
+                                <span>65 videos</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-users"></i>
+                                <span>8.5k students</span>
+                            </div>
+                        </div>
+
+                        <div class="course-footer">
+                            <div class="course-price-modern">
+                                <span class="price-current">₹3,300</span>
+                                <span class="price-original">₹11,000</span>
+                                <span class="price-discount">70% OFF</span>
+                            </div>
+                            <a href="#" class="btn-enroll-modern">
+                                Enroll Now
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Card 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card-redesign">
+                    <div class="course-card-header">
+                        <img src="./images/3.webp" class="course-thumbnail-modern" alt="Course">
+                        <div class="course-overlay">
+                            <button class="btn-play-course">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="course-badges-top">
+                            <span class="badge-new">
+                                <i class="fas fa-sparkles"></i> New
+                            </span>
+                        </div>
+                        <div class="course-rating-badge">
+                            <i class="fas fa-star"></i> 4.7
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-tag">Full Stack</span>
+                            <span class="course-level">Beginner</span>
+                        </div>
+                        <h3 class="course-title-modern">Full Stack Data Analytics V2</h3>
+                        <p class="course-excerpt">Complete data analytics bootcamp from basics to advanced</p>
+
+                        <div class="course-instructor">
+                            <div class="instructor-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="instructor-info">
+                                <span class="instructor-name">Saurabh Moharikar</span>
+                                <span class="instructor-title">Analytics Expert</span>
+                            </div>
+                        </div>
+
+                        <div class="course-stats-grid">
+                            <div class="stat-item-small">
+                                <i class="fas fa-clock"></i>
+                                <span>320+ hrs</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-video"></i>
+                                <span>220 videos</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-users"></i>
+                                <span>3.8k students</span>
+                            </div>
+                        </div>
+
+                        <div class="course-footer">
+                            <div class="course-price-modern">
+                                <span class="price-current">₹8,000</span>
+                                <span class="price-original">₹16,000</span>
+                                <span class="price-discount">50% OFF</span>
+                            </div>
+                            <a href="#" class="btn-enroll-modern">
+                                Enroll Now
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5 animate-on-scroll">
+            <a href="#" class="btn-view-all-modern">
+                View All Courses
+                <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Ecosystem Section - Completely Redesigned -->
+<section class="ecosystem-section-redesign py-5">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header text-center mb-5 animate-on-scroll">
+            <div class="section-badge">
+                <i class="fas fa-rocket"></i> Our Ecosystem
+            </div>
+            <h2 class="section-title-modern">
+                Everything You Need to <span class="gradient-text">Succeed</span>
+            </h2>
+            <p class="section-description">
+                A complete learning ecosystem from courses to career placement
+            </p>
+        </div>
+
+        <!-- Ecosystem Grid -->
+        <div class="row g-4">
+            <!-- Neuro Lab Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-blue">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Neuro Lab</h3>
+                        <p class="ecosystem-card-desc">
+                            State-of-the-art virtual lab with infinite computing power. No need for high-end PCs.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Unlimited Resources</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Cloud Computing</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Explore Lab <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Portal Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-purple">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Job Portal</h3>
+                        <p class="ecosystem-card-desc">
+                            Build resumes, apply for exclusive jobs, and connect with top companies effortlessly.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Resume Builder</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Top Companies</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Find Jobs <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- One Neuron Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-cyan">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">One Neuron</h3>
+                        <p class="ecosystem-card-desc">
+                            500+ tech courses bundled together. Specialized programs tailored to your needs.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>500+ Courses</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>One Subscription</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Get Access <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support System Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-orange">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Support System</h3>
+                        <p class="ecosystem-card-desc">
+                            Join a like-minded community. Get help with complex doubts at your fingertips.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>24/7 Support</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Active Community</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Join Now <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affiliate Program Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-green">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Affiliate Program</h3>
+                        <p class="ecosystem-card-desc">
+                            Earn while you learn. Join our affiliate program and get rewarded for referrals.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Earn Money</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Easy Payouts</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Start Earning <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hall of Fame Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-pink">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Hall of Fame</h3>
+                        <p class="ecosystem-card-desc">
+                            Learn from successful alumni who cracked the code and achieved their goals.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Success Stories</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Alumni Network</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            View Stories <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hackathon Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-red">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Hackathon Portal</h3>
+                        <p class="ecosystem-card-desc">
+                            Participate in exciting hackathons. Showcase creativity, teamwork, and coding skills.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Monthly Events</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Win Prizes</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Join Hackathon <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internship Portal Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-card-icon">
+                        <div class="icon-gradient icon-indigo">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="ecosystem-card-body">
+                        <h3 class="ecosystem-card-title">Internship Portal</h3>
+                        <p class="ecosystem-card-desc">
+                            Choose from 500+ projects across domains. Build, collaborate, and grow with peers.
+                        </p>
+                        <div class="ecosystem-features">
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>500+ Projects</span>
+                            </div>
+                            <div class="eco-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real Experience</span>
+                            </div>
+                        </div>
+                        <a href="#" class="ecosystem-link">
+                            Find Internship <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Faculty Section -->
+<section class="faculty-section py-5">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header text-center mb-5 animate-on-scroll">
+            <div class="section-badge">
+                <i class="fas fa-chalkboard-teacher"></i> Our Faculty
+            </div>
+            <h2 class="section-title-modern">
+                Learn from <span class="gradient-text">Industry Experts</span>
+            </h2>
+            <p class="section-description">
+                Our instructors are seasoned professionals with years of industry experience
+            </p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Faculty Member 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="faculty-card animate-on-scroll">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image-wrapper">
+                            <img src="./images/1.jpg" alt="Dr. Sunny Savita" class="faculty-image">
+                            <div class="faculty-overlay">
+                                <div class="faculty-social">
+                                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            <div class="faculty-badge">
+                                <i class="fas fa-award"></i> Lead Instructor
+                            </div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3 class="faculty-name">Dr. Sunny Savita</h3>
+                            <p class="faculty-title">Chief Data Scientist</p>
+                            <p class="faculty-bio">
+                                15+ years in ML & AI. Former Google researcher with expertise in deep learning and NLP.
+                            </p>
+                            <div class="faculty-stats">
+                                <div class="faculty-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>25k+ Students</span>
+                                </div>
+                                <div class="faculty-stat">
+                                    <i class="fas fa-book"></i>
+                                    <span>45 Courses</span>
+                                </div>
+                                <div class="faculty-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9 Rating</span>
+                                </div>
+                            </div>
+                            <div class="faculty-expertise">
+                                <span class="expertise-tag">Machine Learning</span>
+                                <span class="expertise-tag">Deep Learning</span>
+                                <span class="expertise-tag">AI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Member 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="faculty-card animate-on-scroll">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image-wrapper">
+                            <img src="./images/2.svg" alt="Prof. Krish Naik" class="faculty-image">
+                            <div class="faculty-overlay">
+                                <div class="faculty-social">
+                                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            <div class="faculty-badge badge-purple">
+                                <i class="fas fa-video"></i> Top Educator
+                            </div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3 class="faculty-name">Prof. Krish Naik</h3>
+                            <p class="faculty-title">Senior ML Engineer</p>
+                            <p class="faculty-bio">
+                                YouTube educator with 500k+ subscribers. Specializes in making complex topics simple.
+                            </p>
+                            <div class="faculty-stats">
+                                <div class="faculty-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>500k+ Followers</span>
+                                </div>
+                                <div class="faculty-stat">
+                                    <i class="fas fa-book"></i>
+                                    <span>60 Courses</span>
+                                </div>
+                                <div class="faculty-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8 Rating</span>
+                                </div>
+                            </div>
+                            <div class="faculty-expertise">
+                                <span class="expertise-tag">Python</span>
+                                <span class="expertise-tag">Data Science</span>
+                                <span class="expertise-tag">MLOps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Member 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="faculty-card animate-on-scroll">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image-wrapper">
+                            <img src="./images/3.webp" alt="Dr. Saurabh Moharikar" class="faculty-image">
+                            <div class="faculty-overlay">
+                                <div class="faculty-social">
+                                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="social-icon"><i class="fab fa-medium"></i></a>
+                                </div>
+                            </div>
+                            <div class="faculty-badge badge-cyan">
+                                <i class="fas fa-trophy"></i> Expert Mentor
+                            </div>
+                        </div>
+                        <div class="faculty-info">
+                            <h3 class="faculty-name">Dr. Saurabh Moharikar</h3>
+                            <p class="faculty-title">Full Stack Architect</p>
+                            <p class="faculty-bio">
+                                Ex-Amazon engineer with 12+ years building scalable systems. Passionate about teaching.
+                            </p>
+                            <div class="faculty-stats">
+                                <div class="faculty-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>18k+ Students</span>
+                                </div>
+                                <div class="faculty-stat">
+                                    <i class="fas fa-book"></i>
+                                    <span>35 Courses</span>
+                                </div>
+                                <div class="faculty-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9 Rating</span>
+                                </div>
+                            </div>
+                            <div class="faculty-expertise">
+                                <span class="expertise-tag">Full Stack</span>
+                                <span class="expertise-tag">Cloud</span>
+                                <span class="expertise-tag">DevOps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section - Auto Scrolling -->
+<section class="testimonials-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <div class="section-badge">
+                <i class="fas fa-quote-left"></i> Student Success Stories
+            </div>
+            <h2 class="section-title-modern">
+                What Our <span class="gradient-text">Students Say</span>
+            </h2>
+            <p class="section-description">
+                Real stories from learners who transformed their careers
+            </p>
+        </div>
+    </div>
+
+    <div class="testimonials-scroll-wrapper">
+        <div class="testimonials-track">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/1.jpg" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Rajesh Kumar</h4>
+                        <p>Data Scientist @ Google</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "The Data Science course completely changed my career trajectory. From a software engineer to a Data Scientist at Google - this platform made it possible!"
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> Data Science Masters
+                    </span>
+                    <span class="testimonial-date">2 months ago</span>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/2.svg" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Priya Sharma</h4>
+                        <p>Full Stack Developer @ Amazon</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Exceptional learning experience! The instructors are industry experts and the hands-on projects gave me the confidence to crack FAANG interviews."
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> Full Stack Development
+                    </span>
+                    <span class="testimonial-date">1 month ago</span>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/3.webp" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Amit Patel</h4>
+                        <p>ML Engineer @ Microsoft</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Best investment in my career! The curriculum is cutting-edge, and the support system is incredible. Got placed at Microsoft with 180% salary hike!"
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> Machine Learning
+                    </span>
+                    <span class="testimonial-date">3 weeks ago</span>
+                </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/1.jpg" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Sneha Reddy</h4>
+                        <p>Product Manager @ Flipkart</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "From non-tech background to Product Manager at Flipkart. The comprehensive curriculum and mentorship program made this transition seamless!"
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> Product Management
+                    </span>
+                    <span class="testimonial-date">1 week ago</span>
+                </div>
+            </div>
+
+            <!-- Testimonial 5 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/2.svg" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Vikram Singh</h4>
+                        <p>DevOps Engineer @ Netflix</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "The DevOps bootcamp was intensive and practical. Learned Docker, Kubernetes, CI/CD - everything needed for modern cloud infrastructure!"
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> DevOps Bootcamp
+                    </span>
+                    <span class="testimonial-date">2 weeks ago</span>
+                </div>
+            </div>
+
+            <!-- Testimonial 6 -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/3.webp" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Ananya Gupta</h4>
+                        <p>UI/UX Designer @ Adobe</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Outstanding course structure! The design thinking and prototyping modules helped me land my dream job at Adobe. Forever grateful!"
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> UI/UX Design Pro
+                    </span>
+                    <span class="testimonial-date">4 days ago</span>
+                </div>
+            </div>
+
+            <!-- Duplicate for seamless loop -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/1.jpg" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Rajesh Kumar</h4>
+                        <p>Data Scientist @ Google</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "The Data Science course completely changed my career trajectory. From a software engineer to a Data Scientist at Google - this platform made it possible!"
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> Data Science Masters
+                    </span>
+                    <span class="testimonial-date">2 months ago</span>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">
+                        <img src="./images/2.svg" alt="Student">
+                        <div class="verified-badge">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Priya Sharma</h4>
+                        <p>Full Stack Developer @ Amazon</p>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Exceptional learning experience! The instructors are industry experts and the hands-on projects gave me the confidence to crack FAANG interviews."
+                </p>
+                <div class="testimonial-footer">
+                    <span class="testimonial-course">
+                        <i class="fas fa-graduation-cap"></i> Full Stack Development
+                    </span>
+                    <span class="testimonial-date">1 month ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+        <div class="trusted-section">
+            <div class="trusted-container">
+                <h3 class="trusted-title animate-on-scroll">Trusted by over 17,000 companies and millions of learners around the world</h3>
+                <br>
+                <div class="company-logos">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Volkswagen_logo_2019.svg" alt="Volkswagen" style="height: 80px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg" alt="Cisco" style="height: 80px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Hewlett_Packard_Enterprise_logo.svg" alt="HP Enterprise" style="height: 80px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Citi.svg" alt="Citi" style="height: 80px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="container my-5 py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <h2 class="text-center mb-4 courses-title animate-on-scroll">Frequently Asked Questions</h2>
+            
+            <div class="faq-card">
+                <a class="faq-question" data-bs-toggle="collapse" href="#faq1" role="button" aria-expanded="true" aria-controls="faq1">
+                    <span>What is One Neuron?</span>
+                    <i class="fas fa-plus"></i>
+                </a>
+                <div class="collapse show" id="faq1">
+                    <div class="faq-answer">
+                        <p class="text-muted">
+                            One Neuron is a specialized bundled program tailored to cater to your specific requirements. It includes 500+ tech courses bundled together to make learning easy and affordable, providing access to a vast array of content with a single subscription.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <a class="faq-question collapsed" data-bs-toggle="collapse" href="#faq2" role="button" aria-expanded="false" aria-controls="faq2">
+                    <span>Do I get a certificate after completing a course?</span>
+                    <i class="fas fa-plus"></i>
+                </a>
+                <div class="collapse" id="faq2">
+                    <div class="faq-answer">
+                        <p class="text-muted">
+                            Yes, upon successful completion of any course, including all projects and assignments, you will be awarded a verifiable digital certificate from iNeuron.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <a class="faq-question collapsed" data-bs-toggle="collapse" href="#faq3" role="button" aria-expanded="false" aria-controls="faq3">
+                    <span>What kind of support can I expect?</span>
+                    <i class="fas fa-plus"></i>
+                </a>
+                <div class="collapse" id="faq3">
+                    <div class="faq-answer">
+                        <p class="text-muted">
+                            We offer a robust support system. You can join our community forums to get help from peers and mentors, or use our dedicated support portal for any complex doubts or technical issues you might face.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <a class="faq-question collapsed" data-bs-toggle="collapse" href="#faq4" role="button" aria-expanded="false" aria-controls="faq4">
+                    <span>Is there any access to a virtual lab?</span>
+                    <i class="fas fa-plus"></i>
+                </a>
+                <div class="collapse" id="faq4">
+                    <div class="faq-answer">
+                        <p class="text-muted">
+                            Yes, our Neuro Lab provides premium access to a state-of-the-art virtual lab with infinite computing power. This means you won't need to invest in high-end PCs to practice your skills on complex projects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="site-footer mt-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <img src="https://ineuron.ai/images/ineuron-logo-white.png" alt="iNeuron Logo" class="footer-logo mb-3">
+                <p class="footer-text">
+                    An entire learning ecosystem at your fingertips to make learning fun.
+                </p>
+                <div class="social-icons mt-4">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-6 mb-4 mb-lg-0">
+                <h5>Company</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Hackathon</a></li>
+                    <li><a href="#">Job guarantee</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-6 mb-4 mb-lg-0">
+                <h5>Products</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#">Neuro Lab</a></li>
+                    <li><a href="#">Job Portal</a></li>
+                    <li><a href="#">Internship</a></li>
+                    <li><a href="#">Affiliate</a></li>
+                    <li><a href="#">Hall of fame</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-6 mb-4 mb-lg-0">
+                <h5>Support</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Support System</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-bar text-center">
+        <p>&copy; 2024 iNeuron.ai - All rights reserved.</p>
+    </div>
+</footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
