@@ -1,4 +1,4 @@
-/* Teach on SAS-AI Page Styles */
+/* Teach on AiCureAcademy Page Styles */
 
 :root {
   --primary-color: #0066FF;
@@ -22,6 +22,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -48,13 +49,20 @@
   right: -10%;
   width: 40%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
   animation: float 20s infinite ease-in-out;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
 }
 
 .teach-hero-container {

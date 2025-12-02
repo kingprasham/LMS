@@ -45,8 +45,8 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* SAS-AI Logo */
-.sasai-logo {
+/* AiCureAcademy Logo */
+.aicure-logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -92,7 +92,7 @@ body {
   font-weight: 900;
 }
 
-.sasai-link {
+.aicure-link {
   flex-shrink: 0;
   padding-right: 1rem;
   display: flex;
@@ -101,7 +101,7 @@ body {
   transition: transform 0.3s;
 }
 
-.sasai-link:hover {
+.aicure-link:hover {
   transform: scale(1.05);
 }
 

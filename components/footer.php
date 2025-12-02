@@ -95,7 +95,7 @@ function renderFooter() {
         </div>
 
         <div class="footer-bottom">
-            <p class="footer-copyright">&copy; 2025 SAS-AI, Inc. All rights reserved.</p>
+            <p class="footer-copyright">&copy; 2025 AiCureAcademy, Inc. All rights reserved.</p>
             <div class="footer-bottom-links">
                 <button class="footer-language-btn">
                     <i class="bi bi-globe"></i>

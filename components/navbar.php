@@ -4,8 +4,8 @@ function renderNavbar() {
 ?>
 <header>
     <div class="topnavbar">
-        <a class="sasai-link" href="<?php echo $base; ?>index.php">
-            <div class="sasai-logo">
+        <a class="aicure-link" href="<?php echo $base; ?>index.php">
+            <div class="aicure-logo">
                 <img src="<?php echo $base; ?>images/logo-f.png" alt="AI Cure Academy Logo" class="navbar-logo-img">
             </div>
         </a>
@@ -291,59 +291,73 @@ function renderNavbar() {
 .dropdown-wrapper {
     position: relative;
     display: inline-block;
+    z-index: 10000 !important;
 }
 
-.categories-btn {
+.categories-btn,
+.company-dropdown-btn {
     display: flex !important;
     align-items: center !important;
     background: none;
     border: none;
     cursor: pointer;
     white-space: nowrap;
+    color: #1e293b !important;
 }
 
-.categories-dropdown {
+.categories-dropdown,
+.company-dropdown {
     position: absolute;
     top: 100%;
     left: 0;
     margin-top: 10px;
-    background: white;
+    background: #ffffff !important;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
     min-width: 250px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
+    z-index: 10001 !important;
     padding: 8px 0;
+    border: 1px solid #e2e8f0 !important;
 }
 
-.dropdown-wrapper:hover .categories-dropdown {
-    opacity: 1;
-    visibility: visible;
+.dropdown-wrapper:hover .categories-dropdown,
+.dropdown-wrapper:hover .company-dropdown {
+    opacity: 1 !important;
+    visibility: visible !important;
     transform: translateY(0);
 }
 
+.categories-dropdown .dropdown-item,
+.company-dropdown .dropdown-item,
 .dropdown-item {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 12px;
     padding: 12px 20px;
-    color: #1c1d1f;
-    text-decoration: none;
+    color: #1c1d1f !important;
+    text-decoration: none !important;
     transition: all 0.2s;
     font-size: 0.95rem;
+    background: #ffffff !important;
+    font-weight: 500;
 }
 
+.categories-dropdown .dropdown-item:hover,
+.company-dropdown .dropdown-item:hover,
 .dropdown-item:hover {
-    background: #f7f9fa;
-    color: #5624d0;
+    background: #f7f9fa !important;
+    color: #5624d0 !important;
 }
 
+.categories-dropdown .dropdown-item i,
+.company-dropdown .dropdown-item i,
 .dropdown-item i {
     font-size: 1.1rem;
-    color: #667eea;
+    color: #667eea !important;
     width: 20px;
     text-align: center;
 }
@@ -351,6 +365,37 @@ function renderNavbar() {
 .linkstyle {
     text-decoration: none;
     display: inline-block;
+}
+
+/* Fix for white text on white background */
+.topnavbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 9999;
+}
+
+.nav-btn, .categories-btn, .company-dropdown-btn, .login-btn, .signup-btn {
+    color: #1e293b !important;
+    font-weight: 500;
+}
+
+.nav-btn:hover, .categories-btn:hover, .company-dropdown-btn:hover {
+    color: #4f46e5 !important;
+}
+
+.login-btn {
+    border: 1px solid #e2e8f0;
+    background: transparent;
+}
+
+.signup-btn {
+    background: #4f46e5;
+    color: #ffffff !important;
+}
+
+.cart-btn i {
+    color: #1e293b !important;
 }
 </style>
 
