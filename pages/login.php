@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Log In - SAS-AI', ['css/auth.css']);
+renderHead('Log In - AiCureAcademy', ['css/auth.css']);
 renderNavbar();
 ?>
 
@@ -14,10 +14,10 @@ renderNavbar();
             <button class="close-btn" onclick="window.location.href='../index.php'"><i class="bi bi-x"></i></button>
 
             <div class="auth-logo">
-                <span class="logo-text">SAS<span class="logo-ai">-AI</span></span>
+                <span class="logo-text">AiCure<span class="logo-ai">Academy</span></span>
             </div>
 
-            <h1>Log in to your SAS-AI account</h1>
+            <h1>Log in to your AiCureAcademy account</h1>
 
             <form id="login-form" class="auth-form">
                 <div class="mb-3">

@@ -54,21 +54,6 @@ renderNavbar();
             <div class="settings-section">
                 <div class="settings-section-header">
                     <h3 class="settings-section-title">General Settings</h3>
-                </div>
-                <p class="settings-section-desc">Basic platform configuration</p>
-                
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Site Name</label>
-                        <input type="text" class="form-input" value="SAS-AI Learning Management System" placeholder="Enter site name">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Contact Email</label>
-                        <input type="email" class="form-input" value="admin@sas-ai.in" placeholder="Enter contact email">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Time Zone</label>
-                        <select class="form-select">
                             <option>UTC</option>
                             <option selected>Asia/Kolkata (IST)</option>
                             <option>America/New_York (EST)</option>
@@ -114,7 +99,7 @@ renderNavbar();
                     </div>
                     <div class="form-group">
                         <label class="form-label">SMTP Username</label>
-                        <input type="text" class="form-input" value="noreply@sas-ai.in">
+                        <input type="text" class="form-input" value="noreply@aicureacademy.com">
                     </div>
                     <div class="form-group">
                         <label class="form-label">SMTP Password</label>

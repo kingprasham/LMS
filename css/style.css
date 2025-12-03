@@ -45,6 +45,22 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+/* Navbar Dropdown Visibility Fix */
+.categories-dropdown .dropdown-item,
+.company-dropdown .dropdown-item {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #1c1d1f !important;
+  background-color: #fff !important;
+  display: flex !important;
+}
+
+.categories-dropdown .dropdown-item:hover,
+.company-dropdown .dropdown-item:hover {
+  background-color: #f7f9fa !important;
+  color: #5624d0 !important;
+}
+
 /* AiCureAcademy Logo */
 .aicure-logo {
   display: flex;

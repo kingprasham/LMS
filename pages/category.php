@@ -8,7 +8,7 @@ include('../components/scripts.php');
 // Get category from URL parameter
 $category = isset($_GET['cat']) ? htmlspecialchars($_GET['cat']) : 'Generative AI';
 
-renderHead($category . ' Courses - SAS-AI', ['css/category.css']);
+renderHead($category . ' Courses - AiCureAcademy', ['css/category.css']);
 renderNavbar();
 ?>
 

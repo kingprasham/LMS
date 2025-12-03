@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Careers - Join Our Team at SAS-AI', ['css/careers.css']);
+renderHead('Careers - Join Our Team at AiCureAcademy', ['css/careers.css']);
 renderNavbar();
 ?>
 
@@ -238,7 +238,7 @@ renderNavbar();
         <div class="culture-container">
             <div class="section-header fade-in-up">
                 <h2>Our Culture</h2>
-                <p>Experience what it's like to work at SAS-AI</p>
+                <p>Experience what it's like to work at AiCureAcademy</p>
             </div>
 
             <div class="culture-grid">

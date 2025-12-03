@@ -204,21 +204,21 @@ LMS/
 ## 📞 Support
 
 **Developer**: Prasham Mehta  
-**Company**: SAS-AI  
-**Email**: support@sas-ai.in  
-**Website**: https://sas-ai.in  
+**Company**: AiCureAcademy  
+**Email**: support@aicureacademy.com  
+**Website**: https://aicureacademy.com  
 
 ---
 
 ## 📝 License
 
-Proprietary - SAS-AI © 2025. All rights reserved.
+Proprietary - AiCureAcademy © 2025. All rights reserved.
 
 ---
 
 ## 🎨 Design Theme
 
-The application follows the SAS-AI color scheme:
+The application follows the AiCureAcademy color scheme:
 - Primary: #1a237e (Deep Blue)
 - Secondary: #00bcd4 (Cyan)
 - Accent: #ff6f00 (Orange)

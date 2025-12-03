@@ -1,6 +1,6 @@
 // Teach Page JavaScript
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize animations
     initAnimations();
 
@@ -36,7 +36,7 @@ function setupFAQ() {
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
 
-        question.addEventListener('click', function() {
+        question.addEventListener('click', function () {
             // Close all other items
             faqItems.forEach(otherItem => {
                 if (otherItem !== item) {
@@ -55,9 +55,9 @@ function setupCTAButtons() {
     const ctaButtons = document.querySelectorAll('.btn-hero-cta, .btn-get-started, .btn-final-cta');
 
     ctaButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             // In production, this would navigate to instructor signup page
-            alert('Thank you for your interest in teaching on SAS-AI! Our instructor onboarding process will be available soon.');
+            alert('Thank you for your interest in teaching on AiCureAcademy! Our instructor onboarding process will be available soon.');
         });
     });
 }

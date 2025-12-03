@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Teach on SAS-AI - Become an Instructor', ['css/teach.css']);
+renderHead('Teach on AiCureAcademy - Become an Instructor', ['css/teach.css']);
 renderNavbar();
 ?>
 
@@ -95,7 +95,7 @@ renderNavbar();
         <div class="cta-container fade-in-up">
             <div class="cta-content">
                 <h2>Become an Instructor Today</h2>
-                <p>Join one of the world's largest online learning marketplaces. More than 70,000 instructors teach on SAS-AI.</p>
+                <p>Join one of the world's largest online learning marketplaces. More than 70,000 instructors teach on AiCureAcademy.</p>
             </div>
             <button class="btn-get-started">Get Started Now</button>
         </div>
@@ -116,7 +116,7 @@ renderNavbar();
                 <div class="support-card fade-in-up" style="animation-delay: 0.2s">
                     <i class="bi bi-book-fill"></i>
                     <h3>Teaching Center</h3>
-                    <p>Learn about best practices for teaching on SAS-AI.</p>
+                    <p>Learn about best practices for teaching on AiCureAcademy.</p>
                 </div>
 
                 <div class="support-card fade-in-up" style="animation-delay: 0.3s">
@@ -142,11 +142,11 @@ renderNavbar();
             <div class="faq-accordion">
                 <div class="faq-item fade-in-up" style="animation-delay: 0.1s">
                     <button class="faq-question">
-                        <span>What are the requirements to teach on SAS-AI?</span>
+                        <span>What are the requirements to teach on AiCureAcademy?</span>
                         <i class="bi bi-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Anyone passionate about teaching can become an instructor on SAS-AI. You don't need any specific teaching credentials. However, you should have expertise in the subject you plan to teach and the ability to create engaging video content.</p>
+                        <p>Anyone passionate about teaching can become an instructor on AiCureAcademy. You don't need any specific teaching credentials. However, you should have expertise in the subject you plan to teach and the ability to create engaging video content.</p>
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@ renderNavbar();
                         <i class="bi bi-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>It's completely free to create and publish courses on SAS-AI. We only take a revenue share when you make a sale through the platform.</p>
+                        <p>It's completely free to create and publish courses on AiCureAcademy. We only take a revenue share when you make a sale through the platform.</p>
                     </div>
                 </div>
 

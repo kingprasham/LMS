@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Checkout - SAS-AI', ['css/payment.css']);
+renderHead('Checkout - AiCureAcademy', ['css/payment.css']);
 renderNavbar();
 ?>
 

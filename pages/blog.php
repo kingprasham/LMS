@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Blog - Latest Medical AI & Drug Discovery Articles - SAS-AI', ['css/blog.css']);
+renderHead('Blog - Latest Medical AI & Drug Discovery Articles - AiCureAcademy', ['css/blog.css']);
 renderNavbar();
 ?>
 

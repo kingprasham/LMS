@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Contact Us - Get in Touch with SAS-AI', ['css/contact.css']);
+renderHead('Contact Us - Get in Touch with AiCureAcademy', ['css/contact.css']);
 renderNavbar();
 ?>
 

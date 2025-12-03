@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Shopping Cart - SAS-AI', ['css/cart.css']);
+renderHead('Shopping Cart - AiCureAcademy', ['css/cart.css']);
 renderNavbar();
 ?>
 

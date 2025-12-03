@@ -8,7 +8,7 @@ include('../components/scripts.php');
 // In production, validate the token from URL parameter
 // $token = $_GET['token'] ?? '';
 
-renderHead('Reset Password - SAS-AI', ['css/auth.css']);
+renderHead('Reset Password - AiCureAcademy', ['css/auth.css']);
 renderNavbar();
 ?>
 

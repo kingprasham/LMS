@@ -1,5 +1,5 @@
 <?php
-function renderHead($title = 'SAS-AI', $additionalCSS = [])
+function renderHead($title = 'AiCureAcademy', $additionalCSS = [])
 {
     $base = getBasePath();
     ?>

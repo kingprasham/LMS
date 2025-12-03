@@ -5,7 +5,7 @@ include('../components/navbar.php');
 include('../components/footer.php');
 include('../components/scripts.php');
 
-renderHead('Course Catalog - Discover Medical AI Courses - SAS-AI', ['css/courses.css']);
+renderHead('Course Catalog - Discover Medical AI Courses - AiCureAcademy', ['css/courses.css']);
 renderNavbar();
 ?>
 

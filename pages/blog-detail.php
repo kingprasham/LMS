@@ -8,7 +8,7 @@ include('../components/scripts.php');
 // Get blog ID from URL parameter
 $blogId = isset($_GET['id']) ? htmlspecialchars($_GET['id']) : '1';
 
-renderHead('Top 10 AI-Driven Drug Discovery Breakthroughs - SAS-AI Blog', ['css/blog-detail.css']);
+renderHead('Top 10 AI-Driven Drug Discovery Breakthroughs - AiCureAcademy Blog', ['css/blog-detail.css']);
 renderNavbar();
 ?>
 
