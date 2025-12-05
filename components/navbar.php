@@ -1,5 +1,15 @@
 <?php
 function renderNavbar() {
+    // Start session with centralized configuration
+    if (session_status() === PHP_SESSION_NONE) {
+        require_once(__DIR__ . '/../includes/session.php');
+    }
+    
+    // Check if user is logged in
+    $isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+    $userName = $isLoggedIn ? $_SESSION['full_name'] : '';
+    $userRole = $isLoggedIn ? $_SESSION['role'] : '';
+    
     $base = getBasePath();
 ?>
 <header>
@@ -112,22 +122,59 @@ function renderNavbar() {
                 </button>
             </a>
 
-            <button class="cart-btn" id="notifications-btn" style="display:none;">
-                <i class="bi bi-bell"></i>
-                <span class="badge">0</span>
-            </button>
-
-            <button class="cart-btn" id="profile-btn" style="display:none;">
-                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
-            </button>
-
-            <a href="<?php echo $base; ?>pages/login.php" id="login-link">
-                <button class="login-btn">Log in</button>
-            </a>
-
-            <a href="<?php echo $base; ?>pages/signup.php" id="signup-link">
-                <button class="signup-btn">Sign up</button>
-            </a>
+            <?php if ($isLoggedIn): ?>
+                <!-- Logged In State -->
+                <div class="dropdown-wrapper">
+                    <button class="cart-btn profile-btn-nav" style="display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                        <span style="font-weight: 500;"><?php echo htmlspecialchars($userName); ?></span>
+                        <i class="bi bi-chevron-down" style="font-size: 0.8rem;"></i>
+                    </button>
+                    <div class="categories-dropdown profile-dropdown">
+                        <?php if ($userRole === 'admin'): ?>
+                            <a href="<?php echo $base; ?>pages/admin/dashboard.php" class="dropdown-item">
+                                <i class="bi bi-speedometer2"></i>
+                                Admin Dashboard
+                            </a>
+                        <?php elseif ($userRole === 'instructor'): ?>
+                            <a href="<?php echo $base; ?>pages/instructor/dashboard.php" class="dropdown-item">
+                                <i class="bi bi-speedometer2"></i>
+                                Instructor Dashboard
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo $base; ?>pages/dashboard.php" class="dropdown-item">
+                                <i class="bi bi-speedometer2"></i>
+                                My Dashboard
+                            </a>
+                        <?php endif; ?>
+                        <a href="<?php echo $base; ?>pages/wishlist.php" class="dropdown-item">
+                            <i class="bi bi-book"></i>
+                            My Learning
+                        </a>
+                        <a href="<?php echo $base; ?>pages/cart.php" class="dropdown-item">
+                            <i class="bi bi-receipt"></i>
+                            Purchase History
+                        </a>
+                        <a href="<?php echo $base; ?>pages/settings.php" class="dropdown-item">
+                            <i class="bi bi-gear"></i>
+                            Settings
+                        </a>
+                        <hr style="margin: 8px 0; border-color: #e2e8f0;">
+                        <a href="<?php echo $base; ?>pages/logout.php" class="dropdown-item">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Log Out
+                        </a>
+                    </div>
+                </div>
+            <?php else: ?>
+                <!-- Logged Out State -->
+                <a href="<?php echo $base; ?>pages/login.php">
+                    <button class="login-btn">Log in</button>
+                </a>
+                <a href="<?php echo $base; ?>pages/signup.php">
+                    <button class="signup-btn">Sign up</button>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -322,13 +369,20 @@ function renderNavbar() {
     z-index: 10001 !important;
     padding: 8px 0;
     border: 1px solid #e2e8f0 !important;
+    pointer-events: none;
 }
 
-.dropdown-wrapper:hover .categories-dropdown,
-.dropdown-wrapper:hover .company-dropdown {
+/* FIXED: Only show dropdown when hovering button OR dropdown itself */
+.categories-btn:hover + .categories-dropdown,
+.categories-dropdown:hover,
+.company-dropdown-btn:hover + .company-dropdown,
+.company-dropdown:hover,
+.profile-btn-nav:hover + .profile-dropdown,
+.profile-dropdown:hover {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0);
+    pointer-events: auto;
 }
 
 .categories-dropdown .dropdown-item,
@@ -396,6 +450,27 @@ function renderNavbar() {
 
 .cart-btn i {
     color: #1e293b !important;
+}
+
+/* Profile button styling */
+.profile-btn-nav {
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 6px 16px;
+    background: transparent;
+    transition: all 0.2s;
+    color: #1e293b !important;
+}
+
+.profile-btn-nav:hover {
+    background: #f7f9fa;
+    border-color: #cbd5e0;
+}
+
+.profile-dropdown {
+    min-width: 220px;
+    left: auto;
+    right: 0;
 }
 </style>
 

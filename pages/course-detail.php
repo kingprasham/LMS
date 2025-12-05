@@ -1,4 +1,5 @@
 <?php
+require_once('../includes/session.php');
 include('../config.php');
 include('../components/head.php');
 include('../components/navbar.php');
@@ -8,6 +9,9 @@ include('../components/scripts.php');
 renderHead('Complete Python Bootcamp - AI Cure Academy', ['css/course-detail.css?v=' . time()]);
 renderNavbar();
 ?>
+<script>
+window.isLoggedIn = <?php echo (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) ? 'true' : 'false'; ?>;
+</script>
 
     <!-- Modern Course Hero Section -->
     <section class="course-hero-modern">

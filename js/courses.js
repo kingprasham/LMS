@@ -262,31 +262,115 @@ function setupWishlist() {
     });
 }
 
-// Setup Add to Cart
+// Setup Add to Cart - Use backend API with login check
 function setupAddToCart() {
     const addToCartBtns = document.querySelectorAll('.btn-add-cart');
 
     addToCartBtns.forEach(btn => {
-        btn.addEventListener('click', function (e) {
+        btn.addEventListener('click', async function (e) {
             e.stopPropagation();
 
-            // Animation effect
-            this.innerHTML = '<i class="bi bi-check-circle-fill"></i> Added!';
-            this.style.background = '#00D4AA';
-            this.style.color = 'white';
+            // Check if user is logged in
+            if (!window.isLoggedIn) {
+                const currentPage = window.location.pathname + window.location.search;
+                sessionStorage.setItem('return_url', currentPage);
+                showToast('Please login to add items to cart');
+                setTimeout(() => {
+                    window.location.href = 'login.php?return_url=' + encodeURIComponent(currentPage);
+                }, 1000);
+                return;
+            }
 
-            // Show toast
-            showToast('Course added to cart!');
+            // Get course data from card
+            const courseCard = this.closest('.course-card');
+            if (!courseCard) return;
 
-            // Update cart count
-            updateCartCount();
+            const courseId = parseInt(courseCard.dataset.courseId) || Math.floor(Math.random() * 1000);
+            const courseTitle = courseCard.querySelector('.course-title')?.textContent || 'Course';
+            const priceText = courseCard.querySelector('.current-price')?.textContent || '₹0';
+            const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+            const originalPriceText = courseCard.querySelector('.original-price')?.textContent || '₹0';
+            const originalPrice = parseFloat(originalPriceText.replace(/[^0-9.]/g, '')) || price;
+            const image = courseCard.querySelector('.course-image img')?.src || '';
+            const instructor = courseCard.querySelector('.course-instructor')?.textContent || 'Instructor';
+            const rating = parseFloat(courseCard.dataset.rating) || 4.5;
 
-            // Reset button after 2 seconds
-            setTimeout(() => {
-                this.innerHTML = '<i class="bi bi-cart-plus"></i> Add to Cart';
-                this.style.background = 'white';
-                this.style.color = '#667eea';
-            }, 2000);
+            // Extract duration and lectures from course-meta
+            const metaSpans = courseCard.querySelectorAll('.course-meta span');
+            let duration = '10 hours';
+            let lectures = '50 lectures';
+
+            metaSpans.forEach(span => {
+                const text = span.textContent.trim();
+                if (text.includes('hour')) {
+                    duration = text.replace(/.*?(\d+\.?\d*\s*hours?).*/, '$1').trim();
+                } else if (text.includes('lecture')) {
+                    lectures = text.replace(/.*?(\d+\s*lectures?).*/, '$1').trim();
+                }
+            });
+
+            try {
+                // Fetch CSRF token if not already available
+                if (!window.csrfToken) {
+                    const tokenResponse = await fetch('cart_api.php?action=csrf_token');
+                    const tokenData = await tokenResponse.json();
+                    if (tokenData.success) {
+                        window.csrfToken = tokenData.csrf_token;
+                    }
+                }
+
+                const response = await fetch('cart_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': window.csrfToken
+                    },
+                    body: JSON.stringify({
+                        action: 'add',
+                        csrf_token: window.csrfToken,
+                        course_id: courseId,
+                        course_title: courseTitle,
+                        course_price: price,
+                        course_original_price: originalPrice,
+                        course_image: image,
+                        course_instructor: instructor,
+                        course_rating: rating,
+                        course_duration: duration,
+                        course_lectures: lectures
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Animation effect
+                    this.innerHTML = '<i class="bi bi-check-circle-fill"></i> Added!';
+                    this.style.background = '#00D4AA';
+                    this.style.color = 'white';
+
+                    showToast('Course added to cart!');
+
+                    // Update cart count in navbar
+                    const cartBadge = document.getElementById('cart-count');
+                    const mobileCartBadge = document.getElementById('mobile-cart-count');
+                    if (cartBadge) cartBadge.textContent = data.count;
+                    if (mobileCartBadge) mobileCartBadge.textContent = data.count;
+
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="bi bi-cart-plus"></i> Add to Cart';
+                        this.style.background = 'white';
+                        this.style.color = '#667eea';
+                    }, 2000);
+                } else if (data.already_in_cart) {
+                    showToast('Course is already in cart!');
+                } else {
+                    showToast(data.message || 'Failed to add to cart');
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                showToast('An error occurred. Please try again.');
+            }
         });
     });
 }

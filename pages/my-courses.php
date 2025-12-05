@@ -1,4 +1,15 @@
 <?php
+require_once('../includes/session.php');
+
+// Redirect if not logged in
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header('Location: login.php?return_url=' . urlencode($_SERVER['REQUEST_URI']));
+    exit;
+}
+
+$user_name = $_SESSION['user_name'] ?? 'Student';
+$user_id = $_SESSION['user_id'] ?? 0;
+
 include('../config.php');
 include('../components/head.php');
 include('../components/navbar.php');
@@ -30,208 +41,52 @@ renderNavbar();
         <!-- Filters -->
         <div class="courses-filters fade-in-up" style="animation-delay: 0.1s">
             <div class="tabs-container">
-                <button class="tab-btn active">
+                <button class="tab-btn active" data-filter="all">
                     <i class="bi bi-grid-fill"></i> All Courses
-                    <span class="tab-count">12</span>
+                    <span class="tab-count" id="count-all">0</span>
                 </button>
-                <button class="tab-btn">
+                <button class="tab-btn" data-filter="active">
                     <i class="bi bi-play-circle-fill"></i> Active
-                    <span class="tab-count">5</span>
+                    <span class="tab-count" id="count-active">0</span>
                 </button>
-                <button class="tab-btn">
+                <button class="tab-btn" data-filter="completed">
                     <i class="bi bi-check-circle-fill"></i> Completed
-                    <span class="tab-count">7</span>
+                    <span class="tab-count" id="count-completed">0</span>
                 </button>
             </div>
             
             <div class="search-sort-container">
                 <div class="search-box">
                     <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Search your courses...">
+                    <input type="text" id="search-input" placeholder="Search your courses...">
                 </div>
-                <select class="sort-select">
-                    <option>Last Accessed</option>
-                    <option>Progress (High to Low)</option>
-                    <option>Progress (Low to High)</option>
-                    <option>Recently Enrolled</option>
+                <select class="sort-select" id="sort-select">
+                    <option value="recent">Last Accessed</option>
+                    <option value="progress-high">Progress (High to Low)</option>
+                    <option value="progress-low">Progress (Low to High)</option>
+                    <option value="enrolled">Recently Enrolled</option>
                 </select>
             </div>
         </div>
 
         <!-- Courses Grid -->
-        <div class="courses-grid fade-in-up" style="animation-delay: 0.2s">
-            <!-- Course 1 -->
-            <div class="course-card">
-                <div class="course-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=400&fit=crop" alt="AI Course">
-                    <div class="course-overlay">
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-play"><i class="bi bi-play-fill"></i></a>
-                    </div>
-                    <div class="course-status-badge active">
-                        <span class="status-dot"></span> Active
-                    </div>
-                </div>
-                <div class="course-content">
-                    <div class="course-meta">
-                        <span class="course-category">Generative AI</span>
-                        <div class="course-actions">
-                            <button class="action-btn"><i class="bi bi-heart"></i></button>
-                            <button class="action-btn"><i class="bi bi-three-dots-vertical"></i></button>
-                        </div>
-                    </div>
-                    <h3 class="course-title">AI in Drug Discovery</h3>
-                    <div class="course-instructor">
-                        <i class="bi bi-person-circle"></i> Dr. Sarah Johnson
-                    </div>
-                    
-                    <div class="progress-wrapper">
-                        <div class="progress-info">
-                            <span class="progress-label">65% Complete</span>
-                            <span class="progress-percentage">65%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 65%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="course-footer">
-                        <div class="course-time">
-                            <i class="bi bi-clock"></i> 3h 25m left
-                        </div>
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-continue-small">Continue</a>
-                    </div>
-                </div>
+        <div class="courses-grid fade-in-up" style="animation-delay: 0.2s" id="my-courses-grid-container">
+            <!-- Loading state -->
+            <div class="loading-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                <i class="bi bi-hourglass-split" style="font-size: 3rem; color: #667eea;"></i>
+                <p style="margin-top: 1rem; color: #5a5f73; font-size: 1.1rem;">Loading your courses...</p>
             </div>
+        </div>
 
-            <!-- Course 2 -->
-            <div class="course-card">
-                <div class="course-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&h=400&fit=crop" alt="ML Course">
-                    <div class="course-overlay">
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-play"><i class="bi bi-play-fill"></i></a>
-                    </div>
-                    <div class="course-status-badge active">
-                        <span class="status-dot"></span> Active
-                    </div>
-                </div>
-                <div class="course-content">
-                    <div class="course-meta">
-                        <span class="course-category">Machine Learning</span>
-                        <div class="course-actions">
-                            <button class="action-btn"><i class="bi bi-heart"></i></button>
-                            <button class="action-btn"><i class="bi bi-three-dots-vertical"></i></button>
-                        </div>
-                    </div>
-                    <h3 class="course-title">Machine Learning for Healthcare</h3>
-                    <div class="course-instructor">
-                        <i class="bi bi-person-circle"></i> Prof. Michael Chen
-                    </div>
-                    
-                    <div class="progress-wrapper">
-                        <div class="progress-info">
-                            <span class="progress-label">40% Complete</span>
-                            <span class="progress-percentage">40%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 40%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="course-footer">
-                        <div class="course-time">
-                            <i class="bi bi-clock"></i> 5h 15m left
-                        </div>
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-continue-small">Continue</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 3 -->
-            <div class="course-card">
-                <div class="course-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop" alt="Medical Imaging">
-                    <div class="course-overlay">
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-play"><i class="bi bi-play-fill"></i></a>
-                    </div>
-                    <div class="course-status-badge active">
-                        <span class="status-dot"></span> Active
-                    </div>
-                </div>
-                <div class="course-content">
-                    <div class="course-meta">
-                        <span class="course-category">Deep Learning</span>
-                        <div class="course-actions">
-                            <button class="action-btn"><i class="bi bi-heart"></i></button>
-                            <button class="action-btn"><i class="bi bi-three-dots-vertical"></i></button>
-                        </div>
-                    </div>
-                    <h3 class="course-title">Deep Learning in Medical Imaging</h3>
-                    <div class="course-instructor">
-                        <i class="bi bi-person-circle"></i> Dr. Emily Rodriguez
-                    </div>
-                    
-                    <div class="progress-wrapper">
-                        <div class="progress-info">
-                            <span class="progress-label">85% Complete</span>
-                            <span class="progress-percentage">85%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="course-footer">
-                        <div class="course-time">
-                            <i class="bi bi-clock"></i> 1h 10m left
-                        </div>
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-continue-small">Continue</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Course 4 -->
-             <div class="course-card">
-                <div class="course-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop" alt="Cyber Security">
-                    <div class="course-overlay">
-                        <a href="<?php echo url('pages/course-view.php?id=1'); ?>" class="btn-play"><i class="bi bi-play-fill"></i></a>
-                    </div>
-                    <div class="course-status-badge completed">
-                        <i class="bi bi-check-circle-fill"></i> Completed
-                    </div>
-                </div>
-                <div class="course-content">
-                    <div class="course-meta">
-                        <span class="course-category">Security</span>
-                        <div class="course-actions">
-                            <button class="action-btn"><i class="bi bi-heart"></i></button>
-                            <button class="action-btn"><i class="bi bi-three-dots-vertical"></i></button>
-                        </div>
-                    </div>
-                    <h3 class="course-title">Ethical Hacking Basics</h3>
-                    <div class="course-instructor">
-                        <i class="bi bi-person-circle"></i> Alex Turner
-                    </div>
-                    
-                    <div class="progress-wrapper">
-                        <div class="progress-info">
-                            <span class="progress-label">100% Complete</span>
-                            <span class="progress-percentage">100%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar completed" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="course-footer">
-                        <div class="course-time">
-                            <i class="bi bi-clock"></i> 12h 30m
-                        </div>
-                        <div class="completion-badge">
-                            <i class="bi bi-award-fill"></i> Certified
-                        </div>
-                    </div>
-                </div>
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-state-content">
+                <i class="bi bi-book"></i>
+                <h3>No Courses Found</h3>
+                <p>You haven't enrolled in any courses yet.</p>
+                <a href="<?php echo url('pages/courses.php'); ?>" class="btn-browse">
+                    <i class="bi bi-search"></i> Browse Courses
+                </a>
             </div>
         </div>
     </main>
@@ -241,6 +96,10 @@ renderNavbar();
 <?php renderScripts(); ?>
 
 <script>
+// Store all courses for filtering
+let allCourses = [];
+let currentFilter = 'all';
+
 document.addEventListener('DOMContentLoaded', function() {
     const toggleBtn = document.getElementById('mobileSidebarToggle');
     const sidebar = document.getElementById('dashboardSidebar');
@@ -259,5 +118,261 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Setup filters
+    setupFilters();
+    
+    // Setup search
+    setupSearch();
+    
+    // Setup sort
+    setupSort();
+    
+    // Load courses
+    loadMyCourses();
 });
+
+function setupFilters() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            renderCourses();
+        });
+    });
+}
+
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    let debounceTimer;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            renderCourses();
+        }, 300);
+    });
+}
+
+function setupSort() {
+    document.getElementById('sort-select').addEventListener('change', function() {
+        renderCourses();
+    });
+}
+
+async function loadMyCourses() {
+    try {
+        const response = await fetch('dashboard_api.php?action=my_courses');
+        
+        // Check if response is OK
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            allCourses = data.courses;
+            updateCounts();
+            renderCourses();
+        } else {
+            showEmptyState();
+        }
+    } catch (error) {
+        console.error('Error loading courses:', error);
+        document.getElementById('my-courses-grid-container').innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #dc3545;">
+                <i class="bi bi-exclamation-circle" style="font-size: 2rem;"></i>
+                <p style="margin-top: 1rem;">Failed to load courses: ${error.message}</p>
+                <button onclick="location.reload()" class="btn-primary" style="margin-top: 1rem; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer;">Retry</button>
+            </div>
+        `;
+    }
+}
+
+function updateCounts() {
+    const active = allCourses.filter(c => c.progress < 100).length;
+    const completed = allCourses.filter(c => c.progress >= 100).length;
+    
+    document.getElementById('count-all').textContent = allCourses.length;
+    document.getElementById('count-active').textContent = active;
+    document.getElementById('count-completed').textContent = completed;
+}
+
+function renderCourses() {
+    const container = document.getElementById('my-courses-grid-container');
+    const emptyState = document.getElementById('empty-state');
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const sortBy = document.getElementById('sort-select').value;
+    
+    // Filter courses
+    let filtered = allCourses.filter(course => {
+        // Filter by tab
+        if (currentFilter === 'active' && course.progress >= 100) return false;
+        if (currentFilter === 'completed' && course.progress < 100) return false;
+        
+        // Filter by search
+        if (searchTerm && !course.title.toLowerCase().includes(searchTerm)) return false;
+        
+        return true;
+    });
+    
+    // Sort courses
+    filtered.sort((a, b) => {
+        switch (sortBy) {
+            case 'progress-high':
+                return b.progress - a.progress;
+            case 'progress-low':
+                return a.progress - b.progress;
+            case 'enrolled':
+                return new Date(b.purchaseDate) - new Date(a.purchaseDate);
+            default: // recent
+                return new Date(b.lastAccessed) - new Date(a.lastAccessed);
+        }
+    });
+    
+    // Render
+    if (filtered.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        
+        if (allCourses.length === 0) {
+            emptyState.querySelector('h3').textContent = 'No Courses Yet';
+            emptyState.querySelector('p').textContent = "You haven't enrolled in any courses yet.";
+        } else {
+            emptyState.querySelector('h3').textContent = 'No Matching Courses';
+            emptyState.querySelector('p').textContent = 'Try adjusting your search or filters.';
+        }
+    } else {
+        container.style.display = 'grid';
+        emptyState.style.display = 'none';
+        container.innerHTML = filtered.map(course => renderCourseCard(course)).join('');
+    }
+}
+
+function renderCourseCard(course) {
+    const progress = course.progress || 0;
+    const isCompleted = progress >= 100;
+    const statusClass = isCompleted ? 'completed' : 'active';
+    const statusText = isCompleted ? 'Completed' : 'Active';
+    const timeLeft = isCompleted ? 'Completed' : `${progress}% done`;
+    
+    return `
+        <div class="course-card">
+            <div class="course-thumbnail">
+                <img src="${course.image}" alt="${course.title}">
+                <div class="course-overlay">
+                    <a href="course-view.php?id=${course.id}" class="btn-play"><i class="bi bi-play-fill"></i></a>
+                </div>
+                <div class="course-status-badge ${statusClass}">
+                    ${isCompleted ? '<i class="bi bi-check-circle-fill"></i>' : '<span class="status-dot"></span>'} ${statusText}
+                </div>
+            </div>
+            <div class="course-content">
+                <div class="course-meta">
+                    <span class="course-category">Course</span>
+                    <div class="course-actions">
+                        <button class="action-btn"><i class="bi bi-heart"></i></button>
+                        <button class="action-btn"><i class="bi bi-three-dots-vertical"></i></button>
+                    </div>
+                </div>
+                <h3 class="course-title">${course.title}</h3>
+                <div class="course-instructor">
+                    <i class="bi bi-person-circle"></i> ${course.instructor}
+                </div>
+                
+                <div class="progress-wrapper">
+                    <div class="progress-info">
+                        <span class="progress-label">${progress}% Complete</span>
+                        <span class="progress-percentage">${progress}%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar ${isCompleted ? 'completed' : ''}" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+                
+                <div class="course-footer">
+                    <div class="course-time">
+                        <i class="bi bi-${isCompleted ? 'check-circle' : 'clock'}"></i> ${timeLeft}
+                    </div>
+                    ${isCompleted ? 
+                        `<div class="completion-badge">
+                            <i class="bi bi-award-fill"></i> Certified
+                        </div>` :
+                        `<a href="course-view.php?id=${course.id}" class="btn-continue-small">Continue</a>`
+                    }
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function showEmptyState() {
+    document.getElementById('courses-container').style.display = 'none';
+    document.getElementById('empty-state').style.display = 'block';
+}
 </script>
+
+<style>
+/* Empty State Styles */
+.empty-state {
+    display: none;
+    padding: 4rem 2rem;
+}
+
+.empty-state-content {
+    text-align: center;
+    background: white;
+    border-radius: 20px;
+    padding: 4rem 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.empty-state-content i.bi-book {
+    font-size: 5rem;
+    color: #d1d7dc;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state-content h3 {
+    font-size: 1.8rem;
+    color: #1a1d35;
+    margin-bottom: 0.75rem;
+}
+
+.empty-state-content p {
+    color: #5a5f73;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-browse {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-browse:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Loading State */
+.loading-state {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+</style>

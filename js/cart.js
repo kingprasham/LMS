@@ -1,22 +1,46 @@
 // Cart Page JavaScript - Complete Shopping Cart Functionality
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeCart();
     setupCouponSystem();
     setupCartActions();
 });
 
-// Initialize cart and load items from localStorage
-function initializeCart() {
-    loadCartFromLocalStorage();
+// Initialize cart and load items from database API
+async function initializeCart() {
+    await loadCartFromServer();
     updateCartDisplay();
     updateOrderSummary();
 }
 
-// Load cart items from localStorage
-function loadCartFromLocalStorage() {
-    const cartData = localStorage.getItem('cart');
-    window.cartItems = cartData ? JSON.parse(cartData) : [];
+// Load cart items from server (database)
+async function loadCartFromServer() {
+    try {
+        const response = await fetch('cart_api.php?action=get');
+        const data = await response.json();
+
+        if (data.success) {
+            // Map API response to cart items format
+            window.cartItems = data.items.map(item => ({
+                id: item.id,
+                cart_id: item.cart_id,
+                title: item.title,
+                price: item.price,
+                originalPrice: item.originalPrice,
+                image: item.image,
+                instructor: item.instructor,
+                rating: item.rating,
+                duration: item.duration,
+                lectures: item.lectures
+            }));
+        } else {
+            // User not logged in or error occurred
+            window.cartItems = [];
+        }
+    } catch (error) {
+        console.error('Error loading cart:', error);
+        window.cartItems = [];
+    }
 }
 
 // Save cart to localStorage
@@ -35,8 +59,8 @@ function updateCartDisplay() {
     if (subtitle) {
         const itemCount = window.cartItems.length;
         subtitle.textContent = itemCount === 0 ? 'Your cart is empty' :
-                              itemCount === 1 ? '1 course ready for checkout' :
-                              `${itemCount} courses ready for checkout`;
+            itemCount === 1 ? '1 course ready for checkout' :
+                `${itemCount} courses ready for checkout`;
     }
 
     // Show empty state if no items
@@ -185,11 +209,11 @@ function attachCartItemListeners() {
     const actionButtons = document.querySelectorAll('.action-btn');
 
     actionButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const action = this.dataset.action;
             const index = parseInt(this.dataset.index);
 
-            switch(action) {
+            switch (action) {
                 case 'remove':
                     removeFromCart(index);
                     break;
@@ -204,16 +228,51 @@ function attachCartItemListeners() {
     });
 }
 
-// Remove item from cart
-function removeFromCart(index) {
+// Remove item from cart (using API)
+async function removeFromCart(index) {
     if (confirm('Remove this course from your cart?')) {
         const removedItem = window.cartItems[index];
-        window.cartItems.splice(index, 1);
-        saveCartToLocalStorage();
-        updateCartDisplay();
-        updateOrderSummary();
-        updateCartBadge();
-        showNotification(`"${removedItem.title}" removed from cart`, 'info');
+        const cartId = removedItem.cart_id;
+
+        try {
+            // Get CSRF token
+            if (!window.csrfToken) {
+                const tokenResponse = await fetch('cart_api.php?action=csrf_token');
+                const tokenData = await tokenResponse.json();
+                if (tokenData.success) {
+                    window.csrfToken = tokenData.csrf_token;
+                }
+            }
+
+            const response = await fetch('cart_api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken
+                },
+                body: JSON.stringify({
+                    action: 'remove',
+                    csrf_token: window.csrfToken,
+                    cart_id: cartId
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Remove from local array
+                window.cartItems.splice(index, 1);
+                updateCartDisplay();
+                updateOrderSummary();
+                updateCartBadgeFromServer();
+                showNotification(`"${removedItem.title}" removed from cart`, 'info');
+            } else {
+                showNotification(data.message || 'Failed to remove item', 'error');
+            }
+        } catch (error) {
+            console.error('Error removing from cart:', error);
+            showNotification('An error occurred. Please try again.', 'error');
+        }
     }
 }
 
@@ -271,13 +330,13 @@ function setupCouponSystem() {
     const couponInput = document.querySelector('.promo-input');
 
     if (applyBtn && couponInput) {
-        applyBtn.addEventListener('click', function() {
+        applyBtn.addEventListener('click', function () {
             const code = couponInput.value.trim().toUpperCase();
             applyCoupon(code);
         });
 
         // Allow enter key to apply coupon
-        couponInput.addEventListener('keypress', function(e) {
+        couponInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const code = couponInput.value.trim().toUpperCase();
                 applyCoupon(code);
@@ -297,7 +356,8 @@ function applyCoupon(code) {
         'SAVE10': { discount: 10, description: '10% off' },
         'SAVE20': { discount: 20, description: '20% off' },
         'WELCOME': { discount: 15, description: '15% off for new users' },
-        'STUDENT50': { discount: 50, description: '50% student discount' }
+        'STUDENT50': { discount: 50, description: '50% student discount' },
+        'TEST100': { discount: 100, description: '100% off - FREE course!' }
     };
 
     if (!code) {
@@ -355,7 +415,7 @@ function setupCartActions() {
     // Checkout button
     const checkoutBtn = document.querySelector('.btn-checkout');
     if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', function(e) {
+        checkoutBtn.addEventListener('click', function (e) {
             if (window.cartItems.length === 0) {
                 e.preventDefault();
                 showNotification('Your cart is empty', 'error');
@@ -367,17 +427,33 @@ function setupCartActions() {
     }
 }
 
-// Update cart badge in navbar
-function updateCartBadge() {
-    const badge = document.querySelector('.cart-count');
-    if (badge) {
-        badge.textContent = window.cartItems.length;
-        if (window.cartItems.length === 0) {
-            badge.style.display = 'none';
-        } else {
-            badge.style.display = 'flex';
+// Update cart badge in navbar from server
+async function updateCartBadgeFromServer() {
+    try {
+        const response = await fetch('cart_api.php?action=count');
+        const data = await response.json();
+
+        if (data.success) {
+            const cartBadge = document.getElementById('cart-count');
+            const mobileCartBadge = document.getElementById('mobile-cart-count');
+
+            if (cartBadge) {
+                cartBadge.textContent = data.count;
+                cartBadge.style.display = data.count > 0 ? 'flex' : 'none';
+            }
+            if (mobileCartBadge) {
+                mobileCartBadge.textContent = data.count;
+                mobileCartBadge.style.display = data.count > 0 ? 'inline-block' : 'none';
+            }
         }
+    } catch (error) {
+        console.error('Error updating cart badge:', error);
     }
+}
+
+// Update cart badge in navbar (legacy function for compatibility)
+function updateCartBadge() {
+    updateCartBadgeFromServer();
 }
 
 // Show notification

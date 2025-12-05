@@ -1,4 +1,7 @@
 <?php
+// Start session with centralized configuration
+require_once('./includes/session.php');
+
 require_once('./config.php');
 require_once('./components/head.php');
 require_once('./components/navbar.php');
@@ -10,6 +13,11 @@ renderHead('AI Cure Academy - Smart AI-Powered Learning Platform');
 ?>
 
 <?php renderNavbar(); ?>
+
+<!-- Pass login status to JavaScript -->
+<script>
+window.isLoggedIn = <?php echo (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) ? 'true' : 'false'; ?>;
+</script>
 
     <!-- Hero Carousel Section -->
     <section class="hero-carousel-section">

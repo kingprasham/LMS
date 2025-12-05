@@ -1,4 +1,12 @@
 <?php
+require_once('../includes/session.php');
+
+// Check if user is logged in, redirect if not (MUST be before any output)
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header('Location: login.php?return_url=' . urlencode($_SERVER['REQUEST_URI']));
+    exit;
+}
+
 include('../config.php');
 include('../components/head.php');
 include('../components/navbar.php');
@@ -8,6 +16,9 @@ include('../components/scripts.php');
 renderHead('Checkout - Complete Your Purchase', ['css/checkout.css']);
 renderNavbar();
 ?>
+<script>
+window.isLoggedIn = true;
+</script>
 
     <!-- Checkout Header Section -->
     <section class="checkout-header-section">

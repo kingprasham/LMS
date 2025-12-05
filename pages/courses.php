@@ -1,4 +1,7 @@
 <?php
+// Start session with centralized configuration
+require_once('../includes/session.php');
+
 include('../config.php');
 include('../components/head.php');
 include('../components/navbar.php');
@@ -8,6 +11,11 @@ include('../components/scripts.php');
 renderHead('Course Catalog - Discover Medical AI Courses - AiCureAcademy', ['css/courses.css']);
 renderNavbar();
 ?>
+
+<!-- Pass login status to JavaScript -->
+<script>
+window.isLoggedIn = <?php echo (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) ? 'true' : 'false'; ?>;
+</script>
 
     <!-- Course Catalog Header -->
     <section class="catalog-header-section">

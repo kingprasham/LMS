@@ -1,4 +1,9 @@
 <?php
+// Start session to check login status
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include('../config.php');
 include('../components/head.php');
 include('../components/navbar.php');
@@ -9,6 +14,11 @@ include('../components/sidebar.php');
 renderHead('My Wishlist', ['css/dashboard.css', 'css/wishlist.css']);
 renderNavbar();
 ?>
+
+<!-- Pass login status to JavaScript -->
+<script>
+window.isLoggedIn = <?php echo (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) ? 'true' : 'false'; ?>;
+</script>
 
 <div class="dashboard-wrapper">
     <!--  Sidebar (Same as Dashboard) -->

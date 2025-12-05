@@ -1,6 +1,6 @@
 // Authentication JavaScript
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     setupAuthForms();
 });
 
@@ -8,26 +8,34 @@ function setupAuthForms() {
     // Login form
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Simulate login
             if (email && password) {
-                const user = {
-                    name: email.split('@')[0],
-                    email: email
-                };
+                try {
+                    const response = await fetch('login_process.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
 
-                localStorage.setItem('user', JSON.stringify(user));
+                    const data = await response.json();
 
-                // Show success message
-                alert('Login successful!');
-
-                // Redirect to dashboard
-                window.location.href = 'dashboard.php';
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.href = data.redirect;
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    alert('An error occurred. Please try again.');
+                    console.error('Login error:', error);
+                }
             }
         });
     }
@@ -35,29 +43,35 @@ function setupAuthForms() {
     // Signup form
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
+        signupForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const fullname = document.getElementById('fullname').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const newsletter = document.getElementById('newsletter').checked;
 
-            // Simulate signup
             if (fullname && email && password) {
-                const user = {
-                    name: fullname,
-                    email: email,
-                    newsletter: newsletter
-                };
+                try {
+                    const response = await fetch('signup_process.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ fullname, email, password })
+                    });
 
-                localStorage.setItem('user', JSON.stringify(user));
+                    const data = await response.json();
 
-                // Show success message
-                alert('Account created successfully!');
-
-                // Redirect to dashboard
-                window.location.href = 'dashboard.php';
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.href = data.redirect;
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    alert('An error occurred. Please try again.');
+                    console.error('Signup error:', error);
+                }
             }
         });
     }
@@ -65,9 +79,9 @@ function setupAuthForms() {
     // Social login buttons
     const socialButtons = document.querySelectorAll('.social-btn');
     socialButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const provider = this.textContent.includes('Google') ? 'Google' :
-                           this.textContent.includes('Facebook') ? 'Facebook' : 'Apple';
+                this.textContent.includes('Facebook') ? 'Facebook' : 'Apple';
             alert(`${provider} authentication coming soon!`);
         });
     });

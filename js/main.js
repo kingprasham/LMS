@@ -64,25 +64,60 @@ const courses = [
     }
 ];
 
-// Initialize cart count from localStorage
-let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+// Initialize cart count from database (not localStorage)
+let cartItems = [];
 let wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
+let csrfToken = '';
 
 // Update cart count on page load
-document.addEventListener('DOMContentLoaded', function() {
-    updateCartCount();
+document.addEventListener('DOMContentLoaded', function () {
+    fetchCSRFToken();
+    updateCartCountFromServer();
     loadCourses();
     initializeEventListeners();
 });
 
+// Fetch CSRF token
+async function fetchCSRFToken() {
+    try {
+        // If we're in /pages/ directory, use cart_api.php, otherwise use pages/cart_api.php
+        const apiPath = window.location.pathname.includes('/pages/')
+            ? 'cart_api.php?action=csrf_token'
+            : 'pages/cart_api.php?action=csrf_token';
+        const response = await fetch(apiPath);
+        const data = await response.json();
+        if (data.success) {
+            csrfToken = data.csrf_token;
+        }
+    } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+    }
+}
+
+// Update cart count from server
+async function updateCartCountFromServer() {
+    try {
+        // If we're in /pages/ directory, use cart_api.php, otherwise use pages/cart_api.php
+        const apiPath = window.location.pathname.includes('/pages/')
+            ? 'cart_api.php?action=count'
+            : 'pages/cart_api.php?action=count';
+        const response = await fetch(apiPath);
+        const data = await response.json();
+
+        if (data.success) {
+            updateCartBadgeDisplay(data.count);
+        }
+    } catch (error) {
+        console.error('Error fetching cart count:', error);
+    }
+}
+
 // ENHANCED: Update cart count with animation
-function updateCartCount() {
+function updateCartBadgeDisplay(count) {
     const cartBadge = document.getElementById('cart-count');
     const mobileCartBadge = document.getElementById('mobile-cart-count');
     const cartIcon = document.querySelector('.cart-btn-enhanced');
-    
-    const count = cartItems.length;
-    
+
     if (cartBadge) {
         cartBadge.textContent = count;
         if (count > 0) {
@@ -91,7 +126,7 @@ function updateCartCount() {
             cartBadge.style.display = 'none';
         }
     }
-    
+
     if (mobileCartBadge) {
         mobileCartBadge.textContent = count;
         if (count > 0) {
@@ -100,7 +135,7 @@ function updateCartCount() {
             mobileCartBadge.style.display = 'none';
         }
     }
-    
+
     // Animate cart icon when item is added
     if (cartIcon && count > 0) {
         cartIcon.classList.add('cart-bounce');
@@ -264,16 +299,71 @@ function createStars(rating) {
     return starsHtml;
 }
 
-// ENHANCED: Add to cart with better notification
-function addToCart(courseId) {
+// ENHANCED: Add to cart with backend API and login check
+async function addToCart(courseId) {
+    // Check if user is logged in
+    if (!window.isLoggedIn) {
+        // Store current page for redirect after login
+        const currentPage = window.location.pathname + window.location.search;
+        sessionStorage.setItem('return_url', currentPage);
+
+        // Redirect to login - use correct path based on current location
+        showEnhancedNotification('Please login to add items to cart', 'info');
+        setTimeout(() => {
+            const loginPath = window.location.pathname.includes('/pages/')
+                ? 'login.php?return_url=' + encodeURIComponent(currentPage)
+                : 'pages/login.php?return_url=' + encodeURIComponent(currentPage);
+            window.location.href = loginPath;
+        }, 1000);
+        return;
+    }
+
     const course = courses.find(c => c.id === courseId);
-    if (course && !cartItems.find(item => item.id === courseId)) {
-        cartItems.push(course);
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-        updateCartCount();
-        showEnhancedNotification('✓ Course added to cart!', 'success');
-    } else {
-        showEnhancedNotification('ℹ Course is already in cart!', 'info');
+    if (!course) {
+        showEnhancedNotification('Course not found', 'error');
+        return;
+    }
+
+    try {
+        // Determine correct API path based on current location
+        const apiPath = window.location.pathname.includes('/pages/')
+            ? 'cart_api.php'
+            : 'pages/cart_api.php';
+
+        const response = await fetch(apiPath, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                action: 'add',
+                csrf_token: csrfToken,
+                course_id: course.id,
+                course_title: course.title,
+                course_price: course.price,
+                course_original_price: course.price + 1000,
+                course_image: course.image,
+                course_instructor: course.author,
+                course_rating: course.rating,
+                course_duration: '20 hours',
+                course_lectures: '50 lectures'
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            updateCartBadgeDisplay(data.count);
+            showEnhancedNotification('✓ Course added to cart!', 'success');
+        } else if (data.already_in_cart) {
+            showEnhancedNotification('ℹ Course is already in cart!', 'info');
+        } else {
+            showEnhancedNotification(data.message || 'Failed to add to cart', 'error');
+        }
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        showEnhancedNotification('An error occurred. Please try again.', 'error');
     }
 }
 
@@ -309,20 +399,20 @@ function showEnhancedNotification(message, type = 'success') {
     if (existingNotification) {
         existingNotification.remove();
     }
-    
+
     const notification = document.createElement('div');
     notification.className = 'cart-notification';
-    
+
     const iconClass = type === 'success' ? 'bi-check-circle-fill' : 'bi-info-circle-fill';
-    const bgGradient = type === 'success' 
+    const bgGradient = type === 'success'
         ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
         : 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
-    
+
     notification.innerHTML = `
         <i class="bi ${iconClass}"></i>
         <span>${message}</span>
     `;
-    
+
     notification.style.cssText = `
         position: fixed;
         top: 80px;
@@ -340,9 +430,9 @@ function showEnhancedNotification(message, type = 'success') {
         font-weight: 500;
         font-size: 14px;
     `;
-    
+
     document.body.appendChild(notification);
-    
+
     // Add notification styles if not already added
     if (!document.getElementById('notification-styles')) {
         const notificationStyle = document.createElement('style');
@@ -376,7 +466,7 @@ function showEnhancedNotification(message, type = 'success') {
         `;
         document.head.appendChild(notificationStyle);
     }
-    
+
     // Remove notification after 3 seconds
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.3s ease-out';
@@ -400,19 +490,19 @@ function initializeEventListeners() {
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
     if (hamburgerBtn && mobileMenu && mobileMenuOverlay) {
-        hamburgerBtn.addEventListener('click', function() {
+        hamburgerBtn.addEventListener('click', function () {
             mobileMenu.classList.add('active');
             mobileMenuOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
 
-        closeMenuBtn.addEventListener('click', function() {
+        closeMenuBtn.addEventListener('click', function () {
             mobileMenu.classList.remove('active');
             mobileMenuOverlay.classList.remove('active');
             document.body.style.overflow = '';
         });
 
-        mobileMenuOverlay.addEventListener('click', function() {
+        mobileMenuOverlay.addEventListener('click', function () {
             mobileMenu.classList.remove('active');
             mobileMenuOverlay.classList.remove('active');
             document.body.style.overflow = '';
@@ -422,7 +512,7 @@ function initializeEventListeners() {
     // Topic tabs
     const topicTabs = document.querySelectorAll('.topic-tab');
     topicTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
+        tab.addEventListener('click', function () {
             topicTabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
         });
@@ -431,7 +521,7 @@ function initializeEventListeners() {
     // Skills tabs
     const skillsTabs = document.querySelectorAll('.skills-tab');
     skillsTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
+        tab.addEventListener('click', function () {
             skillsTabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             const skill = this.getAttribute('data-skill');
@@ -442,7 +532,7 @@ function initializeEventListeners() {
     // Search functionality
     const searchInputs = document.querySelectorAll('.searchbar input');
     searchInputs.forEach(input => {
-        input.addEventListener('keypress', function(e) {
+        input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const searchTerm = this.value;
                 console.log('Searching for:', searchTerm);
@@ -484,7 +574,7 @@ function initializeEventListeners() {
                 currentSlide = index;
                 skillsTrack.scrollLeft = currentSlide * cardWidth;
                 updateDots();
-            }  );
+            });
         });
 
         function updateDots() {
@@ -537,7 +627,7 @@ function initContactForm() {
     const contactForm = document.getElementById('homepage-contact-form');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
             // Get form data

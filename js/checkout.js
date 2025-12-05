@@ -1,34 +1,189 @@
 // Checkout Page JavaScript - Complete Checkout Functionality
 
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize cart items as null to indicate loading state
+window.cartItems = null;
+
+document.addEventListener('DOMContentLoaded', function () {
     initializeCheckout();
-    setupPaymentMethodSwitch();
-    setupFormValidation();
-    setupCardFormatting();
-    setupCheckoutButton();
 });
 
-// Initialize checkout and load cart items
-function initializeCheckout() {
-    loadCartFromLocalStorage();
+// Initialize checkout and load cart items from API
+async function initializeCheckout() {
+    // Show loading state
+    showLoadingState();
 
-    if (window.cartItems.length === 0) {
+    await loadCartFromServer();
+
+    if (!window.cartItems || window.cartItems.length === 0) {
         showEmptyCheckout();
         return;
     }
 
     displayOrderItems();
     updateOrderSummary();
+
+    // Setup all interactive features AFTER cart loads
+    setupPaymentMethodSwitch();
+    setupFormValidation();
+    setupCardFormatting();
+    setupCheckoutButton();
+    setupCouponSystem();
+
+    // Hide loading state
+    hideLoadingState();
 }
 
-// Load cart items from localStorage
-function loadCartFromLocalStorage() {
-    const cartData = localStorage.getItem('cart');
-    window.cartItems = cartData ? JSON.parse(cartData) : [];
+// Show loading state
+function showLoadingState() {
+    const wrapper = document.querySelector('.checkout-wrapper');
+    if (wrapper) {
+        wrapper.style.opacity = '0.6';
+        wrapper.style.pointerEvents = 'none';
+    }
+}
 
-    // Load applied coupon if exists
-    const appliedCoupon = localStorage.getItem('appliedCoupon');
+// Hide loading state
+function hideLoadingState() {
+    const wrapper = document.querySelector('.checkout-wrapper');
+    if (wrapper) {
+        wrapper.style.opacity = '1';
+        wrapper.style.pointerEvents = 'auto';
+    }
+}
+
+// Load cart items from server (database API)
+async function loadCartFromServer() {
+    try {
+        const response = await fetch('cart_api.php?action=get');
+        const data = await response.json();
+
+        if (data.success) {
+            window.cartItems = data.items.map(item => ({
+                id: item.id,
+                cart_id: item.cart_id,
+                title: item.title,
+                price: item.price,
+                originalPrice: item.originalPrice,
+                image: item.image,
+                instructor: item.instructor,
+                rating: item.rating,
+                duration: item.duration,
+                lectures: item.lectures
+            }));
+        } else {
+            window.cartItems = [];
+        }
+    } catch (error) {
+        console.error('Error loading cart:', error);
+        window.cartItems = [];
+    }
+
+    // Load applied coupon from sessionStorage
+    const appliedCoupon = sessionStorage.getItem('checkoutCoupon');
     window.appliedCoupon = appliedCoupon ? JSON.parse(appliedCoupon) : null;
+}
+
+// Valid coupon codes
+const validCoupons = {
+    'SAVE10': { discount: 10, description: '10% off' },
+    'SAVE20': { discount: 20, description: '20% off' },
+    'WELCOME': { discount: 15, description: '15% off for new users' },
+    'STUDENT50': { discount: 50, description: '50% student discount' },
+    'TEST100': { discount: 100, description: '100% off - FREE course!' }
+};
+
+// Setup coupon system for checkout
+function setupCouponSystem() {
+    // Add coupon input to the pricing summary if not exists
+    const pricingSummary = document.querySelector('.pricing-summary');
+    if (pricingSummary && !document.getElementById('checkout-coupon-input')) {
+        const couponSection = document.createElement('div');
+        couponSection.className = 'coupon-section-checkout';
+        couponSection.innerHTML = `
+            <div class="coupon-input-row" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                <input type="text" id="checkout-coupon-input" placeholder="Enter coupon code" 
+                    style="flex: 1; padding: 0.75rem; border: 1px solid #d1d7dc; border-radius: 6px; font-size: 0.9rem;">
+                <button id="apply-coupon-btn" type="button"
+                    style="padding: 0.75rem 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                    Apply
+                </button>
+            </div>
+            <div id="coupon-applied-msg" style="display: none; padding: 0.75rem; background: #d4edda; color: #155724; border-radius: 6px; margin-bottom: 1rem;">
+                <i class="bi bi-check-circle-fill"></i> <span id="coupon-applied-text"></span>
+                <button id="remove-coupon-btn" type="button" style="float: right; background: none; border: none; color: #155724; cursor: pointer;">×</button>
+            </div>
+        `;
+        pricingSummary.insertBefore(couponSection, pricingSummary.firstChild);
+
+        // Setup event listeners
+        document.getElementById('apply-coupon-btn').addEventListener('click', applyCoupon);
+        document.getElementById('checkout-coupon-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') applyCoupon();
+        });
+    }
+
+    // Restore applied coupon if exists
+    if (window.appliedCoupon) {
+        showCouponApplied(window.appliedCoupon.code, window.appliedCoupon.discount);
+    }
+}
+
+// Apply coupon code
+function applyCoupon() {
+    const input = document.getElementById('checkout-coupon-input');
+    const code = input.value.trim().toUpperCase();
+
+    if (!code) {
+        showNotification('Please enter a coupon code', 'error');
+        return;
+    }
+
+    if (validCoupons[code]) {
+        window.appliedCoupon = {
+            code: code,
+            discount: validCoupons[code].discount
+        };
+        sessionStorage.setItem('checkoutCoupon', JSON.stringify(window.appliedCoupon));
+
+        showCouponApplied(code, validCoupons[code].discount);
+        updateOrderSummary();
+        showNotification(`Coupon "${code}" applied! ${validCoupons[code].description}`, 'success');
+    } else {
+        showNotification('Invalid coupon code', 'error');
+        input.value = '';
+    }
+}
+
+// Show coupon applied state
+function showCouponApplied(code, discount) {
+    const inputRow = document.querySelector('.coupon-input-row');
+    const appliedMsg = document.getElementById('coupon-applied-msg');
+    const appliedText = document.getElementById('coupon-applied-text');
+
+    if (inputRow) inputRow.style.display = 'none';
+    if (appliedMsg) {
+        appliedMsg.style.display = 'block';
+        appliedText.textContent = `${code} applied (${discount}% off)`;
+    }
+
+    // Setup remove button
+    const removeBtn = document.getElementById('remove-coupon-btn');
+    if (removeBtn) {
+        removeBtn.onclick = function () {
+            window.appliedCoupon = null;
+            sessionStorage.removeItem('checkoutCoupon');
+            if (inputRow) inputRow.style.display = 'flex';
+            if (appliedMsg) appliedMsg.style.display = 'none';
+            document.getElementById('checkout-coupon-input').value = '';
+
+            // Hide coupon row in summary
+            const couponRow = document.getElementById('summary-coupon-row');
+            if (couponRow) couponRow.style.display = 'none';
+
+            updateOrderSummary();
+            showNotification('Coupon removed', 'info');
+        };
+    }
 }
 
 // Display order items in summary
@@ -89,10 +244,10 @@ function showEmptyCheckout() {
 
     if (wrapper) {
         wrapper.innerHTML = `
-            <div class="empty-checkout-state" style="grid-column: 1 / -1;">
-                <i class="bi bi-cart-x"></i>
-                <h3>Your cart is empty</h3>
-                <p>Add some courses to your cart to proceed with checkout</p>
+            <div class="empty-checkout-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                <i class="bi bi-cart-x" style="font-size: 5rem; color: #d1d7dc; margin-bottom: 1.5rem;"></i>
+                <h3 style="font-size: 1.8rem; color: #1a1d35; margin-bottom: 1rem;">Your cart is empty</h3>
+                <p style="font-size: 1.1rem; color: #5a5f73; margin-bottom: 2rem;">Add some courses to your cart to proceed with checkout</p>
                 <a href="${getBasePath()}index.php" class="btn-complete-payment" style="display: inline-flex; text-decoration: none; width: auto;">
                     <i class="bi bi-arrow-left"></i>
                     Browse Courses
@@ -109,7 +264,7 @@ function setupPaymentMethodSwitch() {
     const upiDetails = document.getElementById('upi-details');
 
     paymentRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
+        radio.addEventListener('change', function () {
             // Hide all payment detail forms
             if (cardDetails) cardDetails.style.display = 'none';
             if (upiDetails) upiDetails.style.display = 'none';
@@ -132,11 +287,11 @@ function setupFormValidation() {
         const inputs = billingForm.querySelectorAll('input, select');
 
         inputs.forEach(input => {
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
                 validateField(this);
             });
 
-            input.addEventListener('input', function() {
+            input.addEventListener('input', function () {
                 if (this.classList.contains('invalid')) {
                     validateField(this);
                 }
@@ -231,7 +386,7 @@ function setupCardFormatting() {
 
     // Card number formatting (add spaces every 4 digits)
     if (cardNumberInput) {
-        cardNumberInput.addEventListener('input', function(e) {
+        cardNumberInput.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\s/g, '');
             value = value.replace(/\D/g, '');
 
@@ -249,7 +404,7 @@ function setupCardFormatting() {
 
     // Expiry date formatting (MM/YY)
     if (expiryInput) {
-        expiryInput.addEventListener('input', function(e) {
+        expiryInput.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
 
             if (value.length >= 2) {
@@ -262,7 +417,7 @@ function setupCardFormatting() {
 
     // CVV - only numbers
     if (cvvInput) {
-        cvvInput.addEventListener('input', function(e) {
+        cvvInput.addEventListener('input', function (e) {
             e.target.value = e.target.value.replace(/\D/g, '');
         });
     }
@@ -274,7 +429,7 @@ function setupCheckoutButton() {
     const termsCheckbox = document.getElementById('terms-agree');
 
     if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', function(e) {
+        checkoutBtn.addEventListener('click', function (e) {
             e.preventDefault();
 
             if (window.cartItems.length === 0) {
@@ -374,16 +529,18 @@ function validatePaymentMethod() {
 }
 
 // Process payment
-function processPayment() {
+async function processPayment() {
     const checkoutBtn = document.getElementById('complete-payment-btn');
 
     // Disable button and show loading
     checkoutBtn.disabled = true;
     checkoutBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing Payment...';
 
-    // Simulate payment processing
-    setTimeout(() => {
-        // In production, this would send data to payment gateway
+    try {
+        // Get CSRF token
+        const tokenResponse = await fetch('cart_api.php?action=csrf_token');
+        const tokenData = await tokenResponse.json();
+        const csrfToken = tokenData.csrf_token;
 
         // Get order details
         const orderData = {
@@ -391,23 +548,56 @@ function processPayment() {
             billingDetails: getBillingDetails(),
             paymentMethod: document.querySelector('input[name="payment_method"]:checked').value,
             total: calculateFinalTotal(),
+            coupon: window.appliedCoupon ? window.appliedCoupon.code : null,
             timestamp: new Date().toISOString()
         };
 
-        // Store order in localStorage
-        let orders = localStorage.getItem('orders');
-        orders = orders ? JSON.parse(orders) : [];
-        orders.push(orderData);
-        localStorage.setItem('orders', JSON.stringify(orders));
+        // Process the order via API
+        const response = await fetch('checkout_api.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                action: 'process_order',
+                csrf_token: csrfToken,
+                order_data: orderData
+            })
+        });
 
-        // Clear cart
-        localStorage.removeItem('cart');
-        localStorage.removeItem('appliedCoupon');
+        const data = await response.json();
 
-        // Redirect to success page
-        window.location.href = getBasePath() + 'pages/order-success.php';
+        if (data.success) {
+            // Clear cart from server
+            await fetch('cart_api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    action: 'clear',
+                    csrf_token: csrfToken
+                })
+            });
 
-    }, 2000);
+            // Clear session storage
+            sessionStorage.removeItem('checkoutCoupon');
+
+            // Redirect to success page
+            window.location.href = 'order-success.php?order_id=' + data.order_id;
+        } else {
+            showNotification(data.message || 'Payment failed. Please try again.', 'error');
+            checkoutBtn.disabled = false;
+            checkoutBtn.innerHTML = '<i class="bi bi-lock-fill"></i> Complete Payment';
+        }
+    } catch (error) {
+        console.error('Payment error:', error);
+        showNotification('An error occurred. Please try again.', 'error');
+        checkoutBtn.disabled = false;
+        checkoutBtn.innerHTML = '<i class="bi bi-lock-fill"></i> Complete Payment';
+    }
 }
 
 // Get billing details from form
