@@ -334,15 +334,17 @@ function renderNavbar() {
     }
 }
 
-/* Categories Dropdown */
+/* Categories Dropdown - FIXED HOVER GAP */
 .dropdown-wrapper {
     position: relative;
     display: inline-block;
     z-index: 10000 !important;
 }
 
+/* The trigger buttons */
 .categories-btn,
-.company-dropdown-btn {
+.company-dropdown-btn,
+.profile-btn-nav {
     display: flex !important;
     align-items: center !important;
     background: none;
@@ -350,66 +352,81 @@ function renderNavbar() {
     cursor: pointer;
     white-space: nowrap;
     color: #1e293b !important;
+    position: relative;
 }
 
-.categories-dropdown,
-.company-dropdown {
+/* Create invisible hover bridge from button to dropdown */
+.dropdown-wrapper::after {
+    content: "";
     position: absolute;
     top: 100%;
     left: 0;
-    margin-top: 10px;
-    background: #ffffff !important;
+    right: 0;
+    height: 15px; /* Bridge height - covers the gap */
+    background: transparent;
+}
+
+/* The dropdown menus */
+.categories-dropdown,
+.company-dropdown,
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px); /* Position below with gap */
+    left: 0;
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e2e8f0;
     min-width: 250px;
+    padding: 8px 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     z-index: 10001 !important;
-    padding: 8px 0;
-    border: 1px solid #e2e8f0 !important;
-    pointer-events: none;
 }
 
-/* FIXED: Only show dropdown when hovering button OR dropdown itself */
-.categories-btn:hover + .categories-dropdown,
-.categories-dropdown:hover,
-.company-dropdown-btn:hover + .company-dropdown,
-.company-dropdown:hover,
-.profile-btn-nav:hover + .profile-dropdown,
-.profile-dropdown:hover {
-    opacity: 1 !important;
-    visibility: visible !important;
+/* Profile dropdown positioned from right */
+.profile-dropdown {
+    left: auto;
+    right: 0;
+    min-width: 220px;
+}
+
+/* Show dropdown on wrapper hover */
+.dropdown-wrapper:hover > .categories-dropdown,
+.dropdown-wrapper:hover > .company-dropdown,
+.dropdown-wrapper:hover > .profile-dropdown {
+    opacity: 1;
+    visibility: visible;
     transform: translateY(0);
-    pointer-events: auto;
 }
 
 .categories-dropdown .dropdown-item,
 .company-dropdown .dropdown-item,
-.dropdown-item {
+.profile-dropdown .dropdown-item {
     display: flex !important;
     align-items: center;
     gap: 12px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     color: #1c1d1f !important;
     text-decoration: none !important;
-    transition: all 0.2s;
+    transition: all 0.15s ease;
     font-size: 0.95rem;
-    background: #ffffff !important;
+    background: transparent;
     font-weight: 500;
 }
 
 .categories-dropdown .dropdown-item:hover,
 .company-dropdown .dropdown-item:hover,
-.dropdown-item:hover {
+.profile-dropdown .dropdown-item:hover {
     background: #f7f9fa !important;
     color: #5624d0 !important;
 }
 
 .categories-dropdown .dropdown-item i,
 .company-dropdown .dropdown-item i,
-.dropdown-item i {
+.profile-dropdown .dropdown-item i {
     font-size: 1.1rem;
     color: #667eea !important;
     width: 20px;
@@ -465,12 +482,6 @@ function renderNavbar() {
 .profile-btn-nav:hover {
     background: #f7f9fa;
     border-color: #cbd5e0;
-}
-
-.profile-dropdown {
-    min-width: 220px;
-    left: auto;
-    right: 0;
 }
 </style>
 

@@ -84,9 +84,15 @@ $courses = [
                 <h1 class="dashboard-title">Course & Video Management</h1>
                 <p class="dashboard-subtitle">Manage all courses and video content</p>
             </div>
-            <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">
-                <i class="bi bi-list"></i>
-            </button>
+            <div class="header-actions">
+                <a href="<?php echo url('pages/admin/add-course.php'); ?>" class="btn-primary-header">
+                    <i class="bi bi-plus-lg"></i>
+                    Add New Course
+                </a>
+                <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Filter Bar -->
@@ -95,24 +101,22 @@ $courses = [
                 <i class="bi bi-search"></i>
                 <input type="text" class="search-input" id="searchInput" placeholder="Search courses...">
             </div>
-            <div class="filter-btn-group">
-                <button class="filter-btn active" data-filter="all">All Courses</button>
-                <button class="filter-btn" data-filter="published">Published</button>
-                <button class="filter-btn" data-filter="draft">Draft</button>
-                <button class="filter-btn" data-filter="archived">Archived</button>
+            <div class="filter-actions">
+                <div class="filter-btn-group">
+                    <button class="filter-btn active" data-filter="all">All Courses</button>
+                    <button class="filter-btn" data-filter="published">Published</button>
+                    <button class="filter-btn" data-filter="draft">Draft</button>
+                    <button class="filter-btn" data-filter="archived">Archived</button>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-toggle-btn active" data-view="grid">
+                        <i class="bi bi-grid-3x3"></i>
+                    </button>
+                    <button class="view-toggle-btn" data-view="table">
+                        <i class="bi bi-list-ul"></i>
+                    </button>
+                </div>
             </div>
-            <div class="view-toggle">
-                <button class="view-toggle-btn active" data-view="grid">
-                    <i class="bi bi-grid-3x3"></i>
-                </button>
-                <button class="view-toggle-btn" data-view="table">
-                    <i class="bi bi-list-ul"></i>
-                </button>
-            </div>
-            <a href="<?php echo url('pages/admin/add-course.php'); ?>" class="add-user-btn">
-                <i class="bi bi-plus-circle-fill"></i>
-                Add Course
-            </a>
         </div>
 
         <!-- Grid View -->
