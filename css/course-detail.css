@@ -306,16 +306,18 @@
 .course-main-content {
   background: #f8f9fc;
   padding: 4rem 0;
+  overflow-x: hidden;
 }
 
 .content-container {
-  width: 85%;
+  width: 90%;
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 4rem;
+  grid-template-columns: 1fr 350px;
+  gap: 2.5rem;
   align-items: start;
+  box-sizing: border-box;
 }
 
 /* Content Sections */
@@ -335,6 +337,14 @@
   padding: 2.5rem;
   margin-bottom: 3rem;
   box-shadow: 0 4px 20px rgba(102, 126, 234, 0.08);
+}
+
+/* Left Column - prevent overflow from long text */
+.content-left-column {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .learn-outcomes-grid {
@@ -360,6 +370,8 @@
   color: var(--text-dark);
   font-size: 0.95rem;
   line-height: 1.6;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Course Content Section */
@@ -1314,8 +1326,9 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
   .content-container {
-    grid-template-columns: 1fr 340px;
-    gap: 3rem;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    width: 92%;
   }
 
   .hero-title-modern {

@@ -362,8 +362,9 @@ function renderNavbar() {
     top: 100%;
     left: 0;
     right: 0;
-    height: 15px; /* Bridge height - covers the gap */
+    height: 12px; /* Matches the gap exactly */
     background: transparent;
+    pointer-events: auto; /* Ensure this captures hover */
 }
 
 /* The dropdown menus */
@@ -371,7 +372,7 @@ function renderNavbar() {
 .company-dropdown,
 .profile-dropdown {
     position: absolute;
-    top: calc(100% + 10px); /* Position below with gap */
+    top: calc(100% + 12px); /* Position matches bridge height exactly */
     left: 0;
     background: #ffffff;
     border-radius: 12px;
@@ -381,6 +382,7 @@ function renderNavbar() {
     padding: 8px 0;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none; /* Disable clicks when hidden */
     transform: translateY(-10px);
     transition: all 0.2s ease;
     z-index: 10001 !important;
@@ -399,6 +401,7 @@ function renderNavbar() {
 .dropdown-wrapper:hover > .profile-dropdown {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto; /* Enable clicks when visible */
     transform: translateY(0);
 }
 

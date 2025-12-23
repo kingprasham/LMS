@@ -182,7 +182,7 @@ renderNavbar();
                                         <input type="text" class="form-control form-control-sm" placeholder="Enter Section Title">
                                     </div>
                                     <div class="section-actions">
-                                        <button type="button" class="btn-icon add-lecture-btn" title="Add Lecture"><i class="bi bi-plus-circle"></i></button>
+                                        <button type="button" class="btn-add-lecture add-lecture-btn" title="Add Lecture"><i class="bi bi-plus-circle"></i> Add Lecture</button>
                                         <button type="button" class="btn-icon delete-section-btn" title="Delete Section"><i class="bi bi-trash"></i></button>
                                     </div>
                                 </div>
@@ -191,35 +191,11 @@ renderNavbar();
                                 </div>
                             </div>
 
-                            <!-- Initial Section -->
-                            <div class="curriculum-section">
-                                <div class="section-header">
-                                    <div class="drag-handle"><i class="bi bi-grip-vertical"></i></div>
-                                    <div class="section-title-edit">
-                                        <input type="text" class="form-control form-control-sm" value="Introduction" placeholder="Enter Section Title">
-                                    </div>
-                                    <div class="section-actions">
-                                        <button type="button" class="btn-icon add-lecture-btn" title="Add Lecture"><i class="bi bi-plus-circle"></i></button>
-                                        <button type="button" class="btn-icon delete-section-btn" title="Delete Section"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                                <div class="lecture-list">
-                                    <div class="lecture-item">
-                                        <div class="lecture-drag"><i class="bi bi-grip-vertical"></i></div>
-                                        <div class="lecture-icon"><i class="bi bi-play-circle-fill"></i></div>
-                                        <div class="lecture-info">
-                                            <input type="text" class="form-control form-control-sm" value="Welcome to the course" placeholder="Lecture Title">
-                                        </div>
-                                        <div class="lecture-meta">
-                                            <select class="form-select form-select-sm" style="width: 100px;">
-                                                <option value="video">Video</option>
-                                                <option value="article">Article</option>
-                                                <option value="quiz">Quiz</option>
-                                            </select>
-                                            <button type="button" class="btn-icon text-danger"><i class="bi bi-x"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Empty State - Prompt user to add sections -->
+                            <div class="curriculum-empty-state" id="curriculumEmptyState">
+                                <i class="bi bi-collection-play" style="font-size: 3rem; color: #94a3b8; margin-bottom: 1rem;"></i>
+                                <h4 style="color: #475569; margin-bottom: 0.5rem;">No sections yet</h4>
+                                <p style="color: #94a3b8; font-size: 0.9rem;">Click "Add Section" above to start building your curriculum</p>
                             </div>
                         </div>
                     </div>
@@ -476,6 +452,25 @@ renderNavbar();
 .btn-icon:hover { color: #4f46e5; }
 .btn-icon.text-danger:hover { color: #ef4444; }
 
+.btn-add-lecture {
+    background: #e0e7ff;
+    color: #4f46e5;
+    border: none;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: all 0.2s;
+}
+.btn-add-lecture:hover {
+    background: #4f46e5;
+    color: white;
+}
+
 /* Radio Cards */
 .radio-group {
     display: grid;
@@ -631,6 +626,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('curriculumContainer');
 
     addSectionBtn.addEventListener('click', () => {
+        // Hide empty state message if visible
+        const emptyState = document.getElementById('curriculumEmptyState');
+        if (emptyState) emptyState.style.display = 'none';
+        
         const newSection = document.createElement('div');
         newSection.className = 'curriculum-section';
         newSection.innerHTML = `
@@ -640,7 +639,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <input type="text" class="form-control form-control-sm" placeholder="Enter Section Title">
                 </div>
                 <div class="section-actions">
-                    <button type="button" class="btn-icon add-lecture-btn" title="Add Lecture"><i class="bi bi-plus-circle"></i></button>
+                    <button type="button" class="btn-add-lecture add-lecture-btn" title="Add Lecture">
+                        <i class="bi bi-plus-circle"></i> Add Lecture
+                    </button>
                     <button type="button" class="btn-icon delete-section-btn" title="Delete Section"><i class="bi bi-trash"></i></button>
                 </div>
             </div>

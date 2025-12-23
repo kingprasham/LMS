@@ -1,5 +1,6 @@
 <?php
 include('../../config.php');
+include('../../includes/db_connect.php');
 include('../../components/head.php');
 include('../../components/navbar.php');
 include('../../components/footer.php');
@@ -9,69 +10,51 @@ include('../../components/admin-sidebar.php');
 renderHead('Course & Video Management', ['css/dashboard.css', 'css/admin-courses.css']);
 renderNavbar();
 
-// Static course data
-$courses = [
-    [
-        'id' => 1,
-        'title' => 'AI Fundamentals',
-        'category' => 'Artificial Intelligence',
-        'instructor' => 'Dr. Sarah Johnson',
-        'status' => 'published',
-        'enrollments' => 245,
-        'rating' => 4.8,
-        'thumbnail' => 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop'
-    ],
-    [
-        'id' => 2,
-        'title' => 'Web Development Bootcamp',
-        'category' => 'Web Development',
-        'instructor' => 'Prof. Michael Chen',
-        'status' => 'published',
-        'enrollments' => 189,
-        'rating' => 4.6,
-        'thumbnail' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=250&fit=crop'
-    ],
-    [
-        'id' => 3,
-        'title' => 'Data Science Masterclass',
-        'category' => 'Data Science',
-        'instructor' => 'Dr. Emily Rodriguez',
-        'status' => 'published',
-        'enrollments' => 156,
-        'rating' => 4.9,
-        'thumbnail' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop'
-    ],
-    [
-        'id' => 4,
-        'title' => 'Machine Learning Advanced',
-        'category' => 'Machine Learning',
-        'instructor' => 'Prof. Robert Kim',
-        'status' => 'draft',
-        'enrollments' => 0,
-        'rating' => 0,
-        'thumbnail' => 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop'
-    ],
-    [
-        'id' => 5,
-        'title' => 'Cloud Computing Essentials',
-        'category' => 'Cloud Computing',
-        'instructor' => 'Jennifer Lopez',
-        'status' => 'published',
-        'enrollments' => 134,
-        'rating' => 4.7,
-        'thumbnail' => 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop'
-    ],
-    [
-        'id' => 6,
-        'title' => 'Cybersecurity Basics',
-        'category' => 'Cybersecurity',
-        'instructor' => 'Tom Anderson',
-        'status' => 'archived',
-        'enrollments' => 95,
-        'rating' => 4.5,
-        'thumbnail' => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=250&fit=crop'
-    ],
-];
+// Fetch courses from database
+$courses = [];
+$result = $conn->query("
+    SELECT 
+        c.course_id as id,
+        c.title,
+        c.slug,
+        c.thumbnail,
+        c.status,
+        c.price,
+        c.rating,
+        c.enrollment_count as enrollments,
+        c.created_at,
+        cat.name as category,
+        u.full_name as instructor
+    FROM courses c
+    LEFT JOIN categories cat ON c.category_id = cat.category_id
+    LEFT JOIN users u ON c.instructor_id = u.user_id
+    ORDER BY c.created_at DESC
+");
+
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        // Handle thumbnail URL
+        if (empty($row['thumbnail'])) {
+            $row['thumbnail'] = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop';
+        } elseif (strpos($row['thumbnail'], 'http') !== 0) {
+            // Convert relative path to full URL
+            $row['thumbnail'] = url($row['thumbnail']);
+        }
+        $courses[] = $row;
+    }
+}
+
+// Get counts for stats
+$total_courses = count($courses);
+$published_count = 0;
+$draft_count = 0;
+$archived_count = 0;
+
+foreach ($courses as $course) {
+    if ($course['status'] === 'published') $published_count++;
+    elseif ($course['status'] === 'draft') $draft_count++;
+    elseif ($course['status'] === 'archived') $archived_count++;
+}
 ?>
 
 <div class="dashboard-wrapper">
@@ -82,7 +65,7 @@ $courses = [
         <div class="dashboard-header fade-in-up">
             <div class="header-content">
                 <h1 class="dashboard-title">Course & Video Management</h1>
-                <p class="dashboard-subtitle">Manage all courses and video content</p>
+                <p class="dashboard-subtitle">Manage all courses and video content (<?php echo $total_courses; ?> courses)</p>
             </div>
             <div class="header-actions">
                 <a href="<?php echo url('pages/admin/add-course.php'); ?>" class="btn-primary-header">
@@ -103,10 +86,10 @@ $courses = [
             </div>
             <div class="filter-actions">
                 <div class="filter-btn-group">
-                    <button class="filter-btn active" data-filter="all">All Courses</button>
-                    <button class="filter-btn" data-filter="published">Published</button>
-                    <button class="filter-btn" data-filter="draft">Draft</button>
-                    <button class="filter-btn" data-filter="archived">Archived</button>
+                    <button class="filter-btn active" data-filter="all">All (<?php echo $total_courses; ?>)</button>
+                    <button class="filter-btn" data-filter="published">Published (<?php echo $published_count; ?>)</button>
+                    <button class="filter-btn" data-filter="draft">Draft (<?php echo $draft_count; ?>)</button>
+                    <button class="filter-btn" data-filter="archived">Archived (<?php echo $archived_count; ?>)</button>
                 </div>
                 <div class="view-toggle">
                     <button class="view-toggle-btn active" data-view="grid">
@@ -119,23 +102,41 @@ $courses = [
             </div>
         </div>
 
+        <!-- Empty State -->
+        <?php if (empty($courses)): ?>
+        <div class="empty-state fade-in-up" style="animation-delay: 0.2s">
+            <div class="empty-state-content">
+                <i class="bi bi-collection-play"></i>
+                <h3>No Courses Yet</h3>
+                <p>Get started by creating your first course</p>
+                <a href="<?php echo url('pages/admin/add-course.php'); ?>" class="btn-primary-header">
+                    <i class="bi bi-plus-lg"></i>
+                    Add New Course
+                </a>
+            </div>
+        </div>
+        <?php else: ?>
+
         <!-- Grid View -->
         <div class="course-grid-view active fade-in-up" style="animation-delay: 0.2s">
             <div class="course-grid">
                 <?php foreach ($courses as $course): ?>
-                <div class="course-admin-card" data-status="<?php echo $course['status']; ?>">
+                <div class="course-admin-card" data-status="<?php echo $course['status']; ?>" data-id="<?php echo $course['id']; ?>">
                     <div class="course-admin-thumbnail">
-                        <img src="<?php echo $course['thumbnail']; ?>" alt="<?php echo $course['title']; ?>">
+                        <img src="<?php echo htmlspecialchars($course['thumbnail']); ?>" alt="<?php echo htmlspecialchars($course['title']); ?>">
                         <span class="course-status-badge status-<?php echo $course['status']; ?>">
                             <?php echo ucfirst($course['status']); ?>
                         </span>
+                        <a href="<?php echo url('pages/course-view.php?id='.$course['id']); ?>" class="course-play-btn" title="Play Course">
+                            <i class="bi bi-play-fill"></i>
+                        </a>
                     </div>
                     <div class="course-admin-body">
-                        <span class="course-admin-category"><?php echo $course['category']; ?></span>
-                        <h3 class="course-admin-title"><?php echo $course['title']; ?></h3>
+                        <span class="course-admin-category"><?php echo htmlspecialchars($course['category'] ?? 'Uncategorized'); ?></span>
+                        <h3 class="course-admin-title"><?php echo htmlspecialchars($course['title']); ?></h3>
                         <div class="course-admin-instructor">
                             <i class="bi bi-person-fill"></i>
-                            <span><?php echo $course['instructor']; ?></span>
+                            <span><?php echo htmlspecialchars($course['instructor'] ?? 'No instructor'); ?></span>
                         </div>
                         <div class="course-admin-stats">
                             <div class="course-stat-item">
@@ -152,15 +153,15 @@ $courses = [
                             <?php endif; ?>
                         </div>
                         <div class="course-admin-actions">
-                            <a href="<?php echo url('pages/admin/course-detail.php?id='.$course['id']); ?>" class="course-action-btn">
+                            <a href="<?php echo url('pages/course-detail.php?id='.$course['id']); ?>" class="course-action-btn" target="_blank">
+                                <i class="bi bi-eye-fill"></i>
+                                View
+                            </a>
+                            <a href="<?php echo url('pages/admin/edit-course.php?id='.$course['id']); ?>" class="course-action-btn">
                                 <i class="bi bi-pencil-fill"></i>
                                 Edit
                             </a>
-                            <a href="<?php echo url('pages/admin/analytics.php?course='.$course['id']); ?>" class="course-action-btn">
-                                <i class="bi bi-graph-up"></i>
-                                Stats
-                            </a>
-                            <button class="course-action-btn danger" onclick="deleteCourse(<?php echo $course['id']; ?>, '<?php echo $course['title']; ?>')">
+                            <button class="course-action-btn danger" onclick="deleteCourse(<?php echo $course['id']; ?>, '<?php echo htmlspecialchars(addslashes($course['title'])); ?>')">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
                         </div>
@@ -187,15 +188,15 @@ $courses = [
                     </thead>
                     <tbody>
                         <?php foreach ($courses as $course): ?>
-                        <tr data-status="<?php echo $course['status']; ?>">
+                        <tr data-status="<?php echo $course['status']; ?>" data-id="<?php echo $course['id']; ?>">
                             <td>
                                 <div style="display: flex; align-items: center; gap: 1rem;">
-                                    <img src="<?php echo $course['thumbnail']; ?>" alt="<?php echo $course['title']; ?>" class="course-table-thumbnail">
-                                    <span class="course-list-title"><?php echo $course['title']; ?></span>
+                                    <img src="<?php echo htmlspecialchars($course['thumbnail']); ?>" alt="<?php echo htmlspecialchars($course['title']); ?>" class="course-table-thumbnail">
+                                    <span class="course-list-title"><?php echo htmlspecialchars($course['title']); ?></span>
                                 </div>
                             </td>
-                            <td><?php echo $course['instructor']; ?></td>
-                            <td><span class="course-admin-category"><?php echo $course['category']; ?></span></td>
+                            <td><?php echo htmlspecialchars($course['instructor'] ?? '-'); ?></td>
+                            <td><span class="course-admin-category"><?php echo htmlspecialchars($course['category'] ?? 'Uncategorized'); ?></span></td>
                             <td><span class="status-badge status-<?php echo $course['status']; ?>"><?php echo ucfirst($course['status']); ?></span></td>
                             <td><?php echo $course['enrollments']; ?></td>
                             <td>
@@ -207,13 +208,13 @@ $courses = [
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="<?php echo url('pages/admin/course-detail.php?id='.$course['id']); ?>" class="action-icon-btn" title="Edit">
+                                    <a href="<?php echo url('pages/admin/edit-course.php?id='.$course['id']); ?>" class="action-icon-btn" title="Edit">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                     <a href="<?php echo url('pages/admin/analytics.php?course='.$course['id']); ?>" class="action-icon-btn" title="Analytics">
                                         <i class="bi bi-graph-up-arrow"></i>
                                     </a>
-                                    <button class="action-icon-btn delete" title="Delete" onclick="deleteCourse(<?php echo $course['id']; ?>, '<?php echo $course['title']; ?>')">
+                                    <button class="action-icon-btn delete" title="Delete" onclick="deleteCourse(<?php echo $course['id']; ?>, '<?php echo htmlspecialchars(addslashes($course['title'])); ?>')">
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
                                 </div>
@@ -224,9 +225,92 @@ $courses = [
                 </table>
             </div>
         </div>
+        <?php endif; ?>
 
     </main>
 </div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast"></div>
+
+<style>
+.empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+.empty-state-content {
+    text-align: center;
+    padding: 3rem;
+}
+.empty-state-content i {
+    font-size: 4rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+.empty-state-content h3 {
+    color: #f1f5f9;
+    margin-bottom: 0.5rem;
+}
+.empty-state-content p {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+}
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    background: #10b981;
+    color: white;
+    font-weight: 500;
+    transform: translateX(200%);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+}
+.toast.show {
+    transform: translateX(0);
+}
+.toast.error {
+    background: #ef4444;
+}
+/* Play button on course thumbnail */
+.course-admin-thumbnail {
+    position: relative;
+}
+.course-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+    font-size: 1.5rem;
+    text-decoration: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.course-play-btn i {
+    margin-left: 3px; /* Visual centering for play icon */
+}
+.course-admin-thumbnail:hover .course-play-btn {
+    opacity: 1;
+}
+.course-play-btn:hover {
+    background: #4f46e5;
+    color: white;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+</style>
 
 <?php renderFooter(); ?>
 <?php renderScripts(); ?>
@@ -298,22 +382,40 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
     
     // Search in table view
     document.querySelectorAll('.course-table tbody tr').forEach(row => {
-        const title = row.querySelector('.course-list-title').textContent.toLowerCase();
         const text = row.textContent.toLowerCase();
-        
-        if (text.includes(searchTerm)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
     });
 });
 
-// Delete function
+// Delete function with API call
 function deleteCourse(id, title) {
     if (confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
-        alert('Course deleted successfully! (This is a static demo)');
+        fetch('<?php echo url('api/admin/courses/delete.php'); ?>?id=' + id, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showToast('Course deleted successfully!');
+                // Remove from DOM
+                document.querySelectorAll(`[data-id="${id}"]`).forEach(el => el.remove());
+            } else {
+                showToast(data.error || 'Failed to delete course', 'error');
+            }
+        })
+        .catch(err => {
+            showToast('Error deleting course', 'error');
+        });
     }
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
 }
 
 // Mobile sidebar toggle

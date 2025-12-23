@@ -77,13 +77,28 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeEventListeners();
 });
 
+// Helper function to get cart API path from any location
+function getCartApiPath() {
+    const pathname = window.location.pathname;
+    // Count directory depth from /LMS/ root
+    const lmsIndex = pathname.indexOf('/LMS/');
+    if (lmsIndex === -1) return 'pages/cart_api.php'; // fallback
+
+    const pathAfterLMS = pathname.substring(lmsIndex + 5); // after '/LMS/'
+    const depth = (pathAfterLMS.match(/\//g) || []).length;
+
+    // Build relative path back to root, then to pages/cart_api.php
+    if (depth === 0) {
+        return 'pages/cart_api.php';
+    } else {
+        return '../'.repeat(depth) + 'pages/cart_api.php';
+    }
+}
+
 // Fetch CSRF token
 async function fetchCSRFToken() {
     try {
-        // If we're in /pages/ directory, use cart_api.php, otherwise use pages/cart_api.php
-        const apiPath = window.location.pathname.includes('/pages/')
-            ? 'cart_api.php?action=csrf_token'
-            : 'pages/cart_api.php?action=csrf_token';
+        const apiPath = getCartApiPath() + '?action=csrf_token';
         const response = await fetch(apiPath);
         const data = await response.json();
         if (data.success) {
@@ -97,10 +112,7 @@ async function fetchCSRFToken() {
 // Update cart count from server
 async function updateCartCountFromServer() {
     try {
-        // If we're in /pages/ directory, use cart_api.php, otherwise use pages/cart_api.php
-        const apiPath = window.location.pathname.includes('/pages/')
-            ? 'cart_api.php?action=count'
-            : 'pages/cart_api.php?action=count';
+        const apiPath = getCartApiPath() + '?action=count';
         const response = await fetch(apiPath);
         const data = await response.json();
 
@@ -326,9 +338,7 @@ async function addToCart(courseId) {
 
     try {
         // Determine correct API path based on current location
-        const apiPath = window.location.pathname.includes('/pages/')
-            ? 'cart_api.php'
-            : 'pages/cart_api.php';
+        const apiPath = getCartApiPath();
 
         const response = await fetch(apiPath, {
             method: 'POST',

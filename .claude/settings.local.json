@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(if not exist \"c:\\\\xampp\\\\htdocs\\\\LMS\\\\uploads\" mkdir \"c:\\\\xampp\\\\htdocs\\\\LMS\\\\uploads\")",
+      "Bash(php -r:*)"
+    ]
+  }
+}

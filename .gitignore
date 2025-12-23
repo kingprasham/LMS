@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Uploads (user generated content - too large for git)
+uploads/video/
+uploads/document/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Large files
+*.zip
+*.rar
+*.mp4
+*.mov
+*.avi

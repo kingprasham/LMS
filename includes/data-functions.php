@@ -229,95 +229,144 @@ function getCourseAssignments($course_id) {
  *                   - duration: Duration or deadline (string)
  *                   - type: 'video', 'quiz', 'assignment', or 'certificate' (string)
  *                   - video_id: YouTube video ID (string, only for type='video')
- *                   - quiz_id: Quiz ID (int, only for type='quiz')
- *                   - assignment_id: Assignment ID (int, only for type='assignment')
+ *                   - video_url: Full video URL (string)
+ *                   - description: Lesson description (string)
  *                   - completed: Whether student completed this lesson (bool)
  */
 function getCourseModules($course_id) {
-    $modules = [
-        1 => [
-            [
-                'id' => 1,
-                'title' => 'Introduction to AI in Drug Discovery',
-                'lessons' => [
-                    ['id' => 1, 'title' => 'Welcome to the Course', 'duration' => '5m', 'type' => 'video', 'video_id' => 'dQw4w9WgXcQ', 'completed' => true],
-                    ['id' => 2, 'title' => 'Introduction to Generative Models', 'duration' => '10m', 'type' => 'video', 'video_id' => 'aircAruvnKk', 'completed' => false],
-                    ['id' => 3, 'title' => 'AI in Healthcare Overview', 'duration' => '15m', 'type' => 'video', 'video_id' => 'R9OHn5ZF4Uo', 'completed' => false],
-                    ['id' => 4, 'title' => 'Module 1 Quiz', 'duration' => '20m', 'type' => 'quiz', 'completed' => false]
-                ]
-            ],
-            [
-                'id' => 2,
-                'title' => 'Fundamentals of Machine Learning',
-                'lessons' => [
-                    ['id' => 5, 'title' => 'Supervised Learning Basics', 'duration' => '12m', 'type' => 'video', 'video_id' => 'ujBiM9stPHU', 'completed' => false],
-                    ['id' => 6, 'title' => 'Unsupervised Learning Methods', 'duration' => '18m', 'type' => 'video', 'video_id' => 'IHZwWFHWa-w', 'completed' => false],
-                    ['id' => 7, 'title' => 'Neural Networks Introduction', 'duration' => '25m', 'type' => 'video', 'video_id' => 'CqOfi41LfDw', 'completed' => false],
-                    ['id' => 8, 'title' => 'Hands-on Lab: Build Your First Model', 'duration' => '45m', 'type' => 'assignment', 'completed' => false]
-                ]
-            ],
-            [
-                'id' => 3,
-                'title' => 'Deep Learning for Drug Discovery',
-                'lessons' => [
-                    ['id' => 9, 'title' => 'Molecular Representation', 'duration' => '20m', 'type' => 'video', 'video_id' => 'FfPvn3OCB5M', 'completed' => false],
-                    ['id' => 10, 'title' => 'Graph Neural Networks', 'duration' => '30m', 'type' => 'video', 'video_id' => 'zCEYiCxrL_0', 'completed' => false],
-                    ['id' => 11, 'title' => 'Protein Structure Prediction', 'duration' => '22m', 'type' => 'video', 'video_id' => 'W7wJDJ56c88', 'completed' => false],
-                    ['id' => 12, 'title' => 'Module 3 Quiz', 'duration' => '25m', 'type' => 'quiz', 'completed' => false]
-                ]
-            ],
-            [
-                'id' => 4,
-                'title' => 'Final Project',
-                'lessons' => [
-                    ['id' => 13, 'title' => 'Project Guidelines', 'duration' => '10m', 'type' => 'video', 'video_id' => 'wnHW6o8WMas', 'completed' => false],
-                    ['id' => 14, 'title' => 'Final Project Submission', 'duration' => '120m', 'type' => 'assignment', 'completed' => false],
-                    ['id' => 15, 'title' => 'Course Certificate', 'duration' => '5m', 'type' => 'certificate', 'completed' => false]
-                ]
-            ]
-        ],
-        2 => [
-            [
-                'id' => 1,
-                'title' => 'Healthcare Data Analytics',
-                'lessons' => [
-                    ['id' => 1, 'title' => 'Introduction to Healthcare Data', 'duration' => '8m', 'type' => 'video', 'video_id' => 'dQw4w9WgXcQ', 'completed' => true],
-                    ['id' => 2, 'title' => 'Data Preprocessing Techniques', 'duration' => '15m', 'type' => 'video', 'video_id' => 'aircAruvnKk', 'completed' => false],
-                    ['id' => 3, 'title' => 'Module Quiz', 'duration' => '20m', 'type' => 'quiz', 'completed' => false]
-                ]
-            ],
-            [
-                'id' => 2,
-                'title' => 'Predictive Modeling',
-                'lessons' => [
-                    ['id' => 4, 'title' => 'Regression Models', 'duration' => '20m', 'type' => 'video', 'video_id' => 'ujBiM9stPHU', 'completed' => false],
-                    ['id' => 5, 'title' => 'Classification Algorithms', 'duration' => '25m', 'type' => 'video', 'video_id' => 'IHZwWFHWa-w', 'completed' => false],
-                    ['id' => 6, 'title' => 'Model Evaluation', 'duration' => '18m', 'type' => 'video', 'video_id' => 'CqOfi41LfDw', 'completed' => false]
-                ]
-            ]
-        ],
-        3 => [
-            [
-                'id' => 1,
-                'title' => 'CNN Fundamentals',
-                'lessons' => [
-                    ['id' => 1, 'title' => 'Convolutional Layers', 'duration' => '12m', 'type' => 'video', 'video_id' => 'dQw4w9WgXcQ', 'completed' => true],
-                    ['id' => 2, 'title' => 'Pooling and Activation', 'duration' => '10m', 'type' => 'video', 'video_id' => 'aircAruvnKk', 'completed' => false],
-                    ['id' => 3, 'title' => 'Quiz: CNN Basics', 'duration' => '15m', 'type' => 'quiz', 'completed' => false]
-                ]
-            ],
-            [
-                'id' => 2,
-                'title' => 'Medical Image Processing',
-                'lessons' => [
-                    ['id' => 4, 'title' => 'Image Segmentation', 'duration' => '22m', 'type' => 'video', 'video_id' => 'ujBiM9stPHU', 'completed' => false],
-                    ['id' => 5, 'title' => 'Object Detection in Medical Images', 'duration' => '28m', 'type' => 'video', 'video_id' => 'IHZwWFHWa-w', 'completed' => false]
-                ]
-            ]
-        ]
-    ];
+    global $conn;
+    
+    // If no database connection, return empty array
+    if (!isset($conn) || !$conn) {
+        return [];
+    }
+    
+    $modules = [];
+    
+    // Get sections
+    $sectionsStmt = $conn->prepare("SELECT * FROM course_sections WHERE course_id = ? ORDER BY position, section_id");
+    $sectionsStmt->bind_param("i", $course_id);
+    $sectionsStmt->execute();
+    $sectionsResult = $sectionsStmt->get_result();
+    
+    while ($section = $sectionsResult->fetch_assoc()) {
+        $lessons = [];
+        
+        // Get videos/lessons for this section
+        $videosStmt = $conn->prepare("SELECT * FROM videos WHERE section_id = ? ORDER BY position, video_id");
+        $videosStmt->bind_param("i", $section['section_id']);
+        $videosStmt->execute();
+        $videosResult = $videosStmt->get_result();
+        
+        while ($video = $videosResult->fetch_assoc()) {
+            // Extract YouTube video ID from URL
+            $videoId = '';
+            $videoUrl = $video['video_url'] ?? '';
+            if (preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $videoUrl, $matches)) {
+                $videoId = $matches[1];
+            }
+            
+            // Format duration
+            $durationMins = $video['duration_minutes'] ?? 0;
+            $duration = $durationMins . 'm';
+            
+            // Determine content type from description
+            // Note: A video with quiz JSON in description is still a VIDEO lesson
+            // The quiz JSON means there's an attached quiz that shows AFTER the video ends
+            $type = 'video';
+            $description = $video['description'] ?? '';
+            $hasAttachedQuiz = false;
 
-    return $modules[$course_id] ?? [];
+            if (strpos($description, '{"type":"quiz"') !== false) {
+                // Video has an attached quiz - still a video type, but flag it
+                $hasAttachedQuiz = true;
+            }
+            if (strpos($description, '<!-- ARTICLE -->') !== false) {
+                $type = 'article';
+            }
+            // Note: For standalone quiz lessons, the lesson_type should be stored
+            // in a separate database column, not derived from description
+            
+            // Check user progress from database
+            $completed = false;
+            if (isset($_SESSION['user_id'])) {
+                $userId = $_SESSION['user_id'];
+                $lessonId = $video['video_id'];
+                $progressStmt = $conn->prepare("SELECT completed FROM user_progress WHERE user_id = ? AND video_id = ?");
+                $progressStmt->bind_param("ii", $userId, $lessonId);
+                $progressStmt->execute();
+                $progressResult = $progressStmt->get_result();
+                if ($progressRow = $progressResult->fetch_assoc()) {
+                    $completed = (bool)$progressRow['completed'];
+                }
+            }
+            
+            $lessons[] = [
+                'id' => $video['video_id'],
+                'title' => $video['title'],
+                'duration' => $duration,
+                'type' => $type,
+                'video_id' => $videoId,
+                'video_url' => $videoUrl,
+                'description' => $description,
+                'is_preview' => (bool)($video['is_preview'] ?? false),
+                'completed' => $completed,
+                'has_attached_quiz' => $hasAttachedQuiz
+            ];
+        }
+        
+        $modules[] = [
+            'id' => $section['section_id'],
+            'title' => $section['title'],
+            'lessons' => $lessons
+        ];
+    }
+    
+    // Calculate completion percentage
+    $totalLessons = 0;
+    $completedLessons = 0;
+    foreach ($modules as $module) {
+        foreach ($module['lessons'] as $lesson) {
+            // Only count non-certificate lessons
+            if ($lesson['type'] !== 'certificate') {
+                $totalLessons++;
+                if ($lesson['completed']) $completedLessons++;
+            }
+        }
+    }
+    
+    // If all lessons are completed (100% progress), add a virtual certificate lesson
+    if ($totalLessons > 0 && $completedLessons >= $totalLessons) {
+        // Check if there's already a certificate lesson
+        $hasCertificate = false;
+        foreach ($modules as $module) {
+            foreach ($module['lessons'] as $lesson) {
+                if ($lesson['type'] === 'certificate') {
+                    $hasCertificate = true;
+                    break 2;
+                }
+            }
+        }
+        
+        // Add certificate to the last module if not already present
+        if (!$hasCertificate && !empty($modules)) {
+            $lastModuleIndex = count($modules) - 1;
+            $modules[$lastModuleIndex]['lessons'][] = [
+                'id' => -1, // Virtual ID for certificate
+                'title' => 'Claim Your Certificate',
+                'duration' => '',
+                'type' => 'certificate',
+                'video_id' => '',
+                'video_url' => '',
+                'description' => '',
+                'is_preview' => false,
+                'completed' => true, // Certificate is always "available" once earned
+                'has_attached_quiz' => false
+            ];
+        }
+    }
+    
+    return $modules;
 }
 
 /**
